@@ -33,9 +33,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ParseModel.getInstance().init(getApplicationContext());
-//        workoutList = (ListView)findViewById(R.id.workoutList);
-//        adapter = new CustomAdapter();
-//        workoutList.setAdapter(adapter);
+        workoutList = (ListView)findViewById(R.id.workoutList);
+        adapter = new CustomAdapter();
+        workoutList.setAdapter(adapter);
 
     }
 

@@ -2,8 +2,14 @@ package com.example.app.project;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.example.app.project.model.User;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -12,6 +18,18 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Button login = (Button) findViewById(R.id.loginBtn);
+        Button skip = (Button)findViewById(R.id.skipBtn);
+        Button cancel = (Button) findViewById(R.id.cencelLogin);
+        final EditText userName = (EditText) findViewById(R.id.userName);
+        EditText password = (EditText) findViewById(R.id.password);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User user = new User();
+                //TODO
+            }
+        });
     }
 
     @Override
