@@ -32,9 +32,9 @@ public class ParseModel {
     }
 
 
-public List<Exercise> getAllExercises(){
-    ParseObject
-}
+//public List<Exercise> getAllExercises(){
+//    ParseObject
+//}
 
 
 //    public void login(String userName, String password){

@@ -25,8 +25,8 @@ public class MainActivity extends ActionBarActivity {
     static final int BACK_FROM_NEW_USER_ACTIVITY = 1;
     ListView workoutList;
     public List<Workout> workoutData;
-    CustomAdapter adapter;
-    User user;
+//    CustomAdapter adapter;
+//    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ParseModel.getInstance().init(getApplicationContext());
         workoutList = (ListView)findViewById(R.id.workoutList);
-        adapter = new CustomAdapter();
-        workoutList.setAdapter(adapter);
+//        adapter = new CustomAdapter();
+//        workoutList.setAdapter(adapter);
 
     }
 
