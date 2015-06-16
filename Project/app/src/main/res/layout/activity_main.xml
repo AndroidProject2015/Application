@@ -1,26 +1,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:orientation="vertical">
+    tools:context=".MainActivity">
 
     <fragment
+        android:id="@+id/userDetails"
+        android:name="com.example.app.project.UserDataFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:name="com.example.app.project.UserDataFragment"
-        tools:layout="@layout/fragment_user_data"
-        android:id="@+id/userDetails"/>
+        tools:layout="@layout/fragment_user_data" />
+
     <ListView
+        android:id="@+id/workoutList"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_weight="1"
-        android:id="@+id/workoutList"/>
-    <ImageButton
+        android:layout_weight="1" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:src="@android:drawable/ic_input_add"
-        />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/addWorkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_input_add" />
+
+        <ImageButton
+            android:id="@+id/workouts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_week" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/exercises"
+            android:src="@drawable/weights" />
+
+        <ImageButton
+            android:id="@+id/userPhys"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/muscle" />
+    </LinearLayout>
 </LinearLayout>
