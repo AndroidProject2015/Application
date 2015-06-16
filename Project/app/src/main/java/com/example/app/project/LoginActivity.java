@@ -1,5 +1,6 @@
 package com.example.app.project;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -59,16 +60,19 @@ public class LoginActivity extends ActionBarActivity {
 
 
         String msg = ParseModel.login(email,pass);
-        if (msg == "Success")
-        {
-            err.setText(msg);
-
-        }
-
-        else
-        {
-            err.setText(msg);
-        }
+//        if (msg == "Success")
+//        {
+//            err.setText(msg);
+//
+//        }
+//
+//        else
+//        {
+//            err.setText(msg);
+//        }
+        Intent mainIntent = new Intent(this,MainActivity.class);
+        startActivity(mainIntent);
+        
 
     }
 }
