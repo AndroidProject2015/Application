@@ -3,6 +3,7 @@ package com.example.app.project.model;
 import android.content.Context;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -33,6 +34,19 @@ public class ParseModel {
 //        exercise.saveInBackground();
     }
 
+    public List<Workout> getUserWorkouts(){
+        List<Workout> userWorkouts = new LinkedList<>();
+        ParseQuery query = new ParseQuery("Workout");
+        ParseUser currentUser  = ParseUser.getCurrentUser();
+        query.whereEqualTo("user", currentUser);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List list, ParseException e) {
+
+            }
+        });
+        return userWorkouts;
+    }
 
     public List<Workout> getAllWorkouts() {
         List<Workout> workouts = new LinkedList<>();
