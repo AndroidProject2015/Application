@@ -7,38 +7,54 @@ import java.util.List;
  */
 public class Workout {
 
-    String dayOfWeek;
-    String workoutName;
-    String muscleGroup;
-    List<Exercise> exercises;
+    String _dayOfWeek;
+    String _workoutName;
+    String _muscleGroup;
+    List<Exercise> _exercises;
+
+    public List<Exercise> get_exercises() {
+        return _exercises;
+    }
+
+    public void add_exercises(Exercise exercises) {
+        this._exercises.add(exercises);
+    }
+
+    public boolean deleteExercise(Exercise exercise){
+        if(this._exercises.contains(exercise)){
+            this._exercises.remove(exercise);
+            return true;
+        }
+        return false;
+    }
 
     public String getMuscleGroup() {
-        return muscleGroup;
+        return _muscleGroup;
     }
 
     public void setMuscleGroup(String muscleGroup) {
-        this.muscleGroup = muscleGroup;
+        this._muscleGroup = muscleGroup;
     }
 
-    public Workout(String dayOfWeek, String workoutName) {
-        this.dayOfWeek = dayOfWeek;
-        this.workoutName = workoutName;
+    public Workout(String dayOfWeek, String workoutName, String muscleGroup) {
+        this._dayOfWeek = dayOfWeek;
+        this._workoutName = workoutName;
     }
 
     public void setDayOfWeek(String day){
-        this.dayOfWeek = day;
+        this._dayOfWeek = day;
     }
 
     public void setWorkoutName(String name){
-        this.workoutName = name;
+        this._workoutName = name;
     }
 
     public String getDayOfWeek() {
-        return this.dayOfWeek;
+        return this._dayOfWeek;
     }
 
     public String getWorkoutName() {
-        return this.workoutName;
+        return this._workoutName;
     }
 
 }

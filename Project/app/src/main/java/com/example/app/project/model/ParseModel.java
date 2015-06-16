@@ -1,6 +1,7 @@
 package com.example.app.project.model;
 
 import android.content.Context;
+import android.widget.ListView;
 
 import com.parse.LogInCallback;
 import com.parse.Parse;
@@ -9,6 +10,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -31,6 +33,25 @@ public class ParseModel {
 //        exercise.saveInBackground();
     }
 
+
+    public List<Workout> getAllWorkouts() {
+        List<Workout> workouts = new LinkedList<>();
+        ParseQuery query = new ParseQuery("Workout");
+        try {
+            List<ParseObject> data = query.find();
+            for (ParseObject p : data) {
+                String workoutName = p.getString("workoutName");
+                String dayOfWeek = p.getString("dayOfWeek");
+                String muscleGroup = p.getString("muscleGroup");
+//                User user = p.getParseUser("user");
+//                Exercise exercise = (Exercise)p.getString("exercise");
+            }
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+            return workouts;
+        }
+        return workouts;
+    }
 
 //public List<Exercise> getAllExercises(){
 //    ParseObject

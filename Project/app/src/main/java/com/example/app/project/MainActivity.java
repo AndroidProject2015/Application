@@ -1,5 +1,6 @@
 package com.example.app.project;
 
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,8 +27,7 @@ public class MainActivity extends ActionBarActivity {
     static final int BACK_FROM_NEW_USER_ACTIVITY = 1;
     ListView workoutList;
     public List<Workout> workoutData;
-//    CustomAdapter adapter;
-//    User user;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,44 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ParseModel.getInstance().init(getApplicationContext());
         workoutList = (ListView)findViewById(R.id.workoutList);
-//        adapter = new CustomAdapter();
-//        workoutList.setAdapter(adapter);
+        CustomAdapter adapter = new CustomAdapter();
+        workoutList.setAdapter(adapter);
+
+        ImageButton addWorkout = (ImageButton)findViewById(R.id.addWorkout);
+        ImageButton workouts = (ImageButton)findViewById(R.id.workouts);
+        ImageButton exerciseList = (ImageButton)findViewById(R.id.exercises);
+        ImageButton userPhys = (ImageButton)findViewById(R.id.userPhys);
+
+        addWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newWorkoutIntent = new Intent(getApplicationContext(), NewWorkoutActivity.class);
+                startActivity(newWorkoutIntent);
+            }
+        });
+        workouts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent workoutsIntent = new Intent(getApplicationContext(), WorkoutActivity.class);
+                startActivity(workoutsIntent);
+            }
+        });
+        exerciseList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent exerciseIntent = new Intent(getApplicationContext(), ExerciseActivity.class);
+                startActivity(exerciseIntent);
+            }
+        });
+
+        userPhys.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userIntent = new Intent(getApplicationContext(),UserActivity.class);
+                startActivity(userIntent);
+            }
+        });
+
 
     }
 
@@ -85,9 +122,9 @@ public class MainActivity extends ActionBarActivity {
                 view = inflater.inflate(R.layout.row_layout,null);
 
             }
-            TextView day = (TextView)findViewById(R.id.dayOfWeek);
-            TextView name = (TextView)findViewById(R.id.workoutName);
-            TextView muscle = (TextView)findViewById(R.id.muscleGroup);
+            TextView day = (TextView)view.findViewById(R.id.dayOfWeek);
+            TextView name = (TextView)view.findViewById(R.id.workoutName);
+            TextView muscle = (TextView)view.findViewById(R.id.muscleGroup);
             Workout workout = workoutData.get(i);
             day.setText(workout.getDayOfWeek());
             name.setText(workout.getWorkoutName());

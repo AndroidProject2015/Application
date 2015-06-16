@@ -27,6 +27,18 @@
             android:name=".WorkoutActivity"
             android:label="@string/title_activity_workout" >
         </activity>
+        <activity
+            android:name=".ExerciseActivity"
+            android:label="@string/title_activity_exercise" >
+        </activity>
+        <activity
+            android:name=".NewWorkoutActivity"
+            android:label="@string/title_activity_new_workout" >
+        </activity>
+        <activity
+            android:name=".UserActivity"
+            android:label="@string/title_activity_user" >
+        </activity>
     </application>
 
 </manifest>
