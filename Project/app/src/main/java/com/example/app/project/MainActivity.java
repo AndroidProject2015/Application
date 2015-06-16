@@ -35,6 +35,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ParseModel.getInstance().init(getApplicationContext());
         workoutList = (ListView)findViewById(R.id.workoutList);
+        CustomAdapter adapter = new CustomAdapter();
+        workoutList.setAdapter(adapter);
 
         ImageButton addWorkout = (ImageButton)findViewById(R.id.addWorkout);
         ImageButton workouts = (ImageButton)findViewById(R.id.workouts);
@@ -63,9 +65,14 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        userPhys.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userIntent = new Intent(getApplicationContext(),UserActivity.class);
+                startActivity(userIntent);
+            }
+        });
 
-        CustomAdapter adapter = new CustomAdapter();
-//        workoutList.setAdapter(adapter);
 
     }
 

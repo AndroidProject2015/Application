@@ -11,4 +11,13 @@
     <string name="title_activity_exercise">ExerciseActivity</string>
     <string name="title_activity_new_workout">NewWorkoutActivity</string>
     <string name="title_activity_user">UserActivity</string>
+    <string-array name="dayOfWeek">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
 </resources>
