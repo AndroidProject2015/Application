@@ -2,14 +2,18 @@ package com.example.app.project;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.app.project.model.ParseModel;
 import com.example.app.project.model.User;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -18,18 +22,9 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button login = (Button) findViewById(R.id.loginBtn);
-        Button skip = (Button)findViewById(R.id.skipBtn);
-        Button cancel = (Button) findViewById(R.id.cencelLogin);
-        final EditText userName = (EditText) findViewById(R.id.userName);
-        EditText password = (EditText) findViewById(R.id.password);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                User user = new User();
-                //TODO
-            }
-        });
+        ParseModel.getInstance().init(getApplicationContext());
+
+
     }
 
     @Override
@@ -52,5 +47,28 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public  void LogInBtn(View e)
+    {
+        String email = ((EditText)findViewById(R.id.eMail)).getText().toString();
+        String pass = ((EditText)findViewById(R.id.password)).getText().toString();
+
+        TextView  err= (TextView)findViewById(R.id.errorText);
+
+
+        String msg = ParseModel.login(email,pass);
+        if (msg == "Success")
+        {
+            err.setText(msg);
+
+        }
+
+        else
+        {
+            err.setText(msg);
+        }
+
     }
 }
