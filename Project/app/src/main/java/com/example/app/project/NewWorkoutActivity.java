@@ -1,11 +1,18 @@
 package com.example.app.project;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.example.app.project.model.Workout;
 
 
 public class NewWorkoutActivity extends ActionBarActivity {
@@ -15,11 +22,35 @@ public class NewWorkoutActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_workout);
 
+        EditText workoutName = (EditText)findViewById(R.id.workoutName);
+        EditText muscleGroup = (EditText)findViewById(R.id.muscleGroup);
+        Button nextBtn = (Button)findViewById(R.id.nextBtn);
+        Button cancelBtn = (Button)findViewById(R.id.cancelBtn);
+
+        Workout workout;
+        workout.setDayOfWeek("1");
+        
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         Spinner spinner = (Spinner)findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.dow, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+//        spinner.setOnClickListener();
     }
 
     @Override
@@ -42,5 +73,13 @@ public class NewWorkoutActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class SpinnerActivity extends Activity implements AdapterView.OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        }
     }
 }

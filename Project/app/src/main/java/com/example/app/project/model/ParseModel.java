@@ -58,6 +58,11 @@ public class ParseModel {
         return userWorkouts;
     }
 
+    public void addWorkoutToUser(Workout workout){
+        ParseUser curUser = ParseUser.getCurrentUser();
+
+    }
+
 
     public List<Workout> getAllWorkouts() {
         List<Workout> workouts = new LinkedList<>();

@@ -12,6 +12,12 @@ public class Workout {
     String _muscleGroup;
     List<Exercise> _exercises;
 
+    public Workout(String dayOfWeek, String muscleGroup, String workoutName){
+        this._dayOfWeek = dayOfWeek;
+        this._muscleGroup = muscleGroup;
+        this._workoutName = workoutName;
+    }
+
     public List<Exercise> get_exercises() {
         return _exercises;
     }
@@ -36,10 +42,6 @@ public class Workout {
         this._muscleGroup = muscleGroup;
     }
 
-    public Workout(String dayOfWeek, String workoutName, String muscleGroup) {
-        this._dayOfWeek = dayOfWeek;
-        this._workoutName = workoutName;
-    }
 
     public void setDayOfWeek(String day){
         this._dayOfWeek = day;
