@@ -75,4 +75,12 @@ public class LoginActivity extends ActionBarActivity {
         
 
     }
+
+    public  void RegisterBtn(View e)
+    {
+        Intent regIntent = new Intent(this,RegisterActivity.class);
+        startActivity(regIntent);
+
+    }
+
 }

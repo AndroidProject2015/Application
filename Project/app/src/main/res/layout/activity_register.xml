@@ -70,8 +70,8 @@
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mail"
-        android:id="@+id/radioButton"
+        android:text="Male"
+        android:id="@+id/male"
         android:checked="false"
         android:layout_below="@+id/textView7"
         android:layout_marginTop="20dp"
@@ -81,12 +81,12 @@
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Femail"
-        android:id="@+id/radioButton2"
+        android:text="Female"
+        android:id="@+id/female"
         android:checked="false"
         android:layout_below="@+id/textView7"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/radioButton"
+        android:layout_toEndOf="@+id/male"
         android:textSize="20dp" />
 
     <TextView
@@ -102,7 +102,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hight"
+        android:text="Weight"
         android:id="@+id/textView8"
         android:layout_below="@+id/textView9"
         android:layout_marginTop="20dp"
@@ -114,7 +114,7 @@
         android:layout_height="wrap_content"
         android:text="Hight"
         android:id="@+id/textView9"
-        android:layout_below="@+id/radioButton"
+        android:layout_below="@+id/male"
         android:layout_marginTop="20dp"
         android:layout_alignParentStart="true"
         android:textSize="20dp" />
@@ -124,48 +124,69 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/eMail"
         android:layout_alignTop="@+id/textView2"
-        android:layout_toEndOf="@+id/radioButton2" />
+        android:layout_toEndOf="@+id/female" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/pass1"
         android:layout_alignTop="@+id/textView3"
-        android:layout_alignStart="@+id/editText" />
+        android:layout_alignStart="@+id/eMail" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText3"
+        android:id="@+id/pass2"
         android:layout_alignTop="@+id/textView4"
-        android:layout_alignStart="@+id/editText2" />
+        android:layout_alignStart="@+id/pass1" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText4"
+        android:id="@+id/fName"
         android:layout_alignTop="@+id/textView5"
         android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/editText3" />
+        android:layout_alignStart="@+id/pass2" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText5"
+        android:id="@+id/lName"
         android:layout_alignTop="@+id/textView6"
-        android:layout_alignStart="@+id/editText4"
+        android:layout_alignStart="@+id/fName"
         android:layout_alignParentEnd="true" />
 
-    <CalendarView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/calendarView"
-        android:layout_alignTop="@+id/textView7" />
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/Date"
+        android:layout_alignTop="@+id/textView7"
+        android:layout_alignStart="@+id/lName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/hight"
+        android:layout_above="@+id/textView8"
+        android:layout_alignStart="@+id/Date" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/weight"
+        android:layout_alignBottom="@+id/textView8"
+        android:layout_alignStart="@+id/hight" />
 
 </RelativeLayout>
