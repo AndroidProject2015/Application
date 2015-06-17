@@ -19,6 +19,7 @@ import com.example.app.project.model.ParseModel;
 import com.example.app.project.model.User;
 import com.example.app.project.model.Workout;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -26,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
 
     static final int BACK_FROM_NEW_USER_ACTIVITY = 1;
     ListView workoutList;
-    public List<Workout> workoutData;
+    public List<Workout> workoutData = new LinkedList<>();
     User user;
 
     @Override
@@ -35,8 +36,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ParseModel.getInstance().init(getApplicationContext());
         workoutList = (ListView)findViewById(R.id.workoutList);
+        workoutData = ParseModel.getInstance().getUserWorkouts();
         CustomAdapter adapter = new CustomAdapter();
         workoutList.setAdapter(adapter);
+
 
         ImageButton addWorkout = (ImageButton)findViewById(R.id.addWorkout);
         ImageButton workouts = (ImageButton)findViewById(R.id.workouts);
@@ -107,12 +110,12 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public Object getItem(int i) {
-            return null;
+            return workoutData.get(i);
         }
 
         @Override
         public long getItemId(int i) {
-            return 0;
+            return i;
         }
 
         @Override
