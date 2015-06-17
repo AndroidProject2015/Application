@@ -19,7 +19,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_toEndOf="@+id/userPic"
-        android:text="User"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -36,8 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
         android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/weightText"
-        android:text="80"/>
+        android:layout_toEndOf="@+id/weightText" />
 
     <TextView
         android:id="@+id/heightText"
@@ -53,8 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/weightText"
         android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/heightText"
-        android:text="180"/>
+        android:layout_toEndOf="@+id/heightText" />
 
 
     <TextView
@@ -71,8 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/height"
         android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/bmiText"
-        android:text="20"/>
+        android:layout_toEndOf="@+id/bmiText" />
 
 
 </RelativeLayout>

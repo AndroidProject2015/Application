@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.app.project.model.ParseModel;
 import com.example.app.project.model.User;
 import com.example.app.project.model.Workout;
+import com.parse.ParseUser;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -125,6 +126,7 @@ public class MainActivity extends ActionBarActivity {
                 view = inflater.inflate(R.layout.row_layout,null);
 
             }
+
             TextView day = (TextView)view.findViewById(R.id.dayOfWeek);
             TextView name = (TextView)view.findViewById(R.id.workoutName);
             TextView muscle = (TextView)view.findViewById(R.id.muscleGroup);
@@ -134,5 +136,11 @@ public class MainActivity extends ActionBarActivity {
             muscle.setText(workout.getMuscleGroup());
             return null;
         }
+    }
+
+    public void WorkOutsBtn(View v)
+    {
+        Intent wo = new Intent(this,WorkoutActivity.class);
+        startActivity(wo);
     }
 }

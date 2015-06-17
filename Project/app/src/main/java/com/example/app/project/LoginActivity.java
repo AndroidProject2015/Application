@@ -27,8 +27,8 @@ public class LoginActivity extends ActionBarActivity {
 
         if (ParseUser.getCurrentUser() != null)
         {
-            Intent regIntent = new Intent(this,RegisterActivity.class);
-            startActivity(regIntent);
+            Intent mainAvtyvity = new Intent(this,MainActivity.class);
+            startActivity(mainAvtyvity);
         }
 
 
