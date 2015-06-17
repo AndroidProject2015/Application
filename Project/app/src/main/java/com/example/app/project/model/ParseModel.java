@@ -34,19 +34,30 @@ public class ParseModel {
 //        exercise.saveInBackground();
     }
 
-    public List<Workout> getUserWorkouts(){
-        List<Workout> userWorkouts = new LinkedList<>();
+//    public interface GetWorkoutListener{
+//        public void onResult(List<Workout> workouts);
+//    }
+
+    public List<Workout> getUserWorkouts() {
+        final List<Workout> userWorkouts = new LinkedList<>();
         ParseQuery query = new ParseQuery("Workout");
-        ParseUser currentUser  = ParseUser.getCurrentUser();
+        ParseUser currentUser = ParseUser.getCurrentUser();
         query.whereEqualTo("user", currentUser);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List list, ParseException e) {
-
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                for (ParseObject po : parseObjects) {
+                    String name = po.getString("workoutName");
+                    String muscleGroup = po.getString("muscleGroup");
+                    String day = po.getString("dayOfWeek");
+                    Workout w = new Workout(day,name,muscleGroup);
+                    userWorkouts.add(w);
+                }
             }
         });
         return userWorkouts;
     }
+
 
     public List<Workout> getAllWorkouts() {
         List<Workout> workouts = new LinkedList<>();
@@ -78,7 +89,7 @@ public class ParseModel {
         ParseUser.logInInBackground(email, pass, new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
-                    msg[0] ="Success";
+                    msg[0] = "Success";
 
                 } else {
                     msg[0] = e.getMessage();
@@ -87,7 +98,6 @@ public class ParseModel {
             }
 
         });
-
 
 
         return msg[0];
