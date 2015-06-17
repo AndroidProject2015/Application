@@ -56,23 +56,28 @@ public class LoginActivity extends ActionBarActivity {
         String email = ((EditText)findViewById(R.id.eMail)).getText().toString();
         String pass = ((EditText)findViewById(R.id.password)).getText().toString();
 
-        TextView  err= (TextView)findViewById(R.id.errorText);
+        final TextView  err= (TextView)findViewById(R.id.errorText);
+        final Intent mainIntent = new Intent(this, MainActivity.class);
 
 
-        String msg = ParseModel.login(email,pass);
-//        if (msg == "Success")
-//        {
-//            err.setText(msg);
-//
-//        }
-//
-//        else
-//        {
-//            err.setText(msg);
-//        }
-        Intent mainIntent = new Intent(this,MainActivity.class);
-        startActivity(mainIntent);
-        
+
+
+        ParseUser.logInInBackground(email, pass, new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+
+                    startActivity(mainIntent);
+
+                } else {
+                    err.setText(e.getMessage());
+
+
+
+                }
+            }
+
+        });
+
 
     }
 

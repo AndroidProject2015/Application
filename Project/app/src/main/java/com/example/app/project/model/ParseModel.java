@@ -83,27 +83,7 @@ public class ParseModel {
 //}
 
 
-    public static String login(String email, String pass) {
-        final String[] msg = new String[1];
 
-        ParseUser.logInInBackground(email, pass, new LogInCallback() {
-            public void done(ParseUser user, ParseException e) {
-                if (user != null) {
-                    msg[0] = "Success";
-
-                } else {
-                    msg[0] = e.getMessage();
-
-                }
-            }
-
-        });
-
-
-        return msg[0];
-
-
-    }
 
 
 }

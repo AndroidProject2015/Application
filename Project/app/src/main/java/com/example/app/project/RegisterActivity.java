@@ -7,8 +7,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +23,6 @@ public class RegisterActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         RegisterCheck();
-
 
 
     }
@@ -48,6 +49,10 @@ public class RegisterActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void finishBtn(View v) {
+
+    }
+
     public static boolean isEmailValid(String email) {
         boolean isValid = false;
 
@@ -62,18 +67,14 @@ public class RegisterActivity extends ActionBarActivity {
         return isValid;
     }
 
-    private void RegisterCheck()
-    {
+    private void RegisterCheck() {
         final EditText email = (EditText) findViewById(R.id.eMail);
         email.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                if(!isEmailValid(s.toString()))
-                {
+                if (!isEmailValid(s.toString())) {
                     email.setTextColor(Color.RED);
-                }
-                else
-                {
+                } else {
                     email.setTextColor(Color.BLACK);
                 }
 
@@ -89,5 +90,35 @@ public class RegisterActivity extends ActionBarActivity {
 
             }
         });
+
+
+         EditText pass2 = (EditText) findViewById(R.id.pass2);
+
+        pass2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {}
+                else {
+                    if (!PassMatch()) {
+                        Toast.makeText(getApplicationContext(), "The Password are not match", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            }
+        });
+//
     }
+
+    private boolean PassMatch() {
+        final EditText pass1 = (EditText) findViewById(R.id.pass1);
+
+        final EditText pass2 = (EditText) findViewById(R.id.pass2);
+        if (pass1.getText().toString().equals(pass2.getText().toString()) && pass1.getText().toString().length() !=0) {
+            return true;
+
+        }
+        return false;
+
+    }
+
 }
