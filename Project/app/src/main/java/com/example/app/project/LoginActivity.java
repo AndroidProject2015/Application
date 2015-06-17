@@ -25,8 +25,16 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         ParseModel.getInstance().init(getApplicationContext());
 
+        if (ParseUser.getCurrentUser() != null)
+        {
+            Intent regIntent = new Intent(this,RegisterActivity.class);
+            startActivity(regIntent);
+        }
+
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,6 +75,7 @@ public class LoginActivity extends ActionBarActivity {
                 if (user != null) {
 
                     startActivity(mainIntent);
+                    finish();
 
                 } else {
                     err.setText(e.getMessage());
