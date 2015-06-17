@@ -1,5 +1,6 @@
 package com.example.app.project;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,8 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,10 +57,81 @@ public class RegisterActivity extends ActionBarActivity {
     }
 
     public void finishBtn(View v) {
+        EditText email = (EditText) findViewById(R.id.eMail);
+        EditText pass = (EditText) findViewById(R.id.pass1);
+        EditText fName = (EditText) findViewById(R.id.fName);
+        EditText lName = (EditText) findViewById(R.id.lName);
+        EditText height = (EditText) findViewById(R.id.height);
+        EditText weight = (EditText) findViewById(R.id.weight);
+        RadioButton gender  = (RadioButton)findViewById(((RadioGroup)findViewById(R.id.gender)).getCheckedRadioButtonId());
+
+        if (!IsEmailValid(email.getText().toString()))
+        {
+            email.requestFocus();
+            return;
+        }
+        if (!PassMatch())
+        {
+            pass.requestFocus();
+            return;
+        }
+        if(fName.getText().toString().length() == 0)
+        {
+            fName.requestFocus();
+            return;
+        }
+        if(lName.getText().toString().length() == 0)
+        {
+            lName.requestFocus();
+            return;
+        }
+
+        if(height.getText().toString().length() == 0)
+        {
+            height.requestFocus();
+            return;
+        }
+        if(weight.getText().toString().length() == 0)
+        {
+            weight.requestFocus();
+            return;
+        }
+
+        Double bmi = Double.valueOf(weight.getText().toString()) /(Math.sqrt(Double.valueOf(height.getText().toString())/10));
+
+
+
+        ParseUser user = new ParseUser();
+        user.setUsername(email.getText().toString());
+        user.setPassword(pass.getText().toString());
+        user.setEmail(email.getText().toString());
+
+// other fields can be set just like with ParseObject
+        user.put("name", fName.getText().toString()+" " +lName.getText().toString());
+        user.put("birthDate", fName.getText().toString());
+        user.put("gender", gender.getText().toString());
+        user.put("height", Integer.valueOf(height.getText().toString()));
+        user.put("weight", Integer.valueOf(weight.getText().toString()));
+        user.put("bMI", bmi);
+
+        final Intent mainIntent = new Intent(this, MainActivity.class);
+
+        user.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException e) {
+                if (e == null) {
+                   startActivity(mainIntent);
+                } else {
+                    Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+
 
     }
 
-    public static boolean isEmailValid(String email) {
+    public static boolean IsEmailValid(String email) {
         boolean isValid = false;
 
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -72,7 +150,7 @@ public class RegisterActivity extends ActionBarActivity {
         email.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                if (!isEmailValid(s.toString())) {
+                if (!IsEmailValid(s.toString())) {
                     email.setTextColor(Color.RED);
                 } else {
                     email.setTextColor(Color.BLACK);
@@ -109,7 +187,7 @@ public class RegisterActivity extends ActionBarActivity {
 //
     }
 
-    private boolean PassMatch() {
+    public boolean PassMatch() {
         final EditText pass1 = (EditText) findViewById(R.id.pass1);
 
         final EditText pass2 = (EditText) findViewById(R.id.pass2);
@@ -120,5 +198,7 @@ public class RegisterActivity extends ActionBarActivity {
         return false;
 
     }
+
+
 
 }

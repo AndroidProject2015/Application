@@ -28,7 +28,7 @@ public class NewWorkoutActivity extends ActionBarActivity {
         Button cancelBtn = (Button)findViewById(R.id.cancelBtn);
 
         Workout workout;
-        workout.setDayOfWeek("1");
+        //workout.setDayOfWeek("1");
         
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
