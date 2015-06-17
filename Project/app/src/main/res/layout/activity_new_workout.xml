@@ -19,28 +19,42 @@
 
     <EditText
         android:id="@+id/workoutName"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_toEndOf="@+id/workoutNameView" />
 
     <TextView
+        android:id="@+id/dayOfWeekView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:text="Day of week"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/workoutNameView"
-        android:id="@+id/dayOfWeek" />
+        android:layout_marginTop="20dp"
+        android:text="Day of week"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
+        android:id="@+id/spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_marginLeft="10dp"
         android:layout_below="@+id/workoutName"
-        android:layout_toEndOf="@+id/dayOfWeek" />
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/dayOfWeekView" />
 
+    <TextView
+        android:id="@+id/muscleGroupView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
+        android:text="Muscle Group:"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <EditText
+        android:id="@+id/muscleGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
+        android:layout_toEndOf="@+id/muscleGroupView" />
 
 </RelativeLayout>
