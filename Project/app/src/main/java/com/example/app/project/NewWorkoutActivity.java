@@ -1,6 +1,8 @@
 package com.example.app.project;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,28 +14,37 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.app.project.model.ParseModel;
 import com.example.app.project.model.Workout;
 
 
 public class NewWorkoutActivity extends ActionBarActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_workout);
 
-        EditText workoutName = (EditText)findViewById(R.id.workoutName);
-        EditText muscleGroup = (EditText)findViewById(R.id.muscleGroup);
-        Button nextBtn = (Button)findViewById(R.id.nextBtn);
-        Button cancelBtn = (Button)findViewById(R.id.cancelBtn);
+        EditText workoutName = (EditText) findViewById(R.id.workoutName);
+        EditText muscleGroup = (EditText) findViewById(R.id.muscleGroup);
+        Button nextBtn = (Button) findViewById(R.id.nextBtn);
+        Button cancelBtn = (Button) findViewById(R.id.cancelBtn);
+        final Workout workout = new Workout("1",muscleGroup.getText().toString(), workoutName.getText().toString());
 
-        Workout workout;
-        workout.setDayOfWeek("1");
-        
+//        workout.setDayOfWeek("1");
+//        workout.setMuscleGroup(muscleGroup.getText().toString());
+//        workout.setWorkoutName(workoutName.getText().toString());
+        final ExerciseToWorkoutFragment fragment =
+                (ExerciseToWorkoutFragment) getFragmentManager().findFragmentById(R.id.exerciseFragment);
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.hide(fragment);
+        fragmentTransaction.commit();
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ParseModel.getInstance().addWorkoutToUser(workout);
+                fragmentTransaction.show(fragment);
             }
         });
 
@@ -44,7 +55,7 @@ public class NewWorkoutActivity extends ActionBarActivity {
             }
         });
 
-        Spinner spinner = (Spinner)findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.dow, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -75,7 +86,7 @@ public class NewWorkoutActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class SpinnerActivity extends Activity implements AdapterView.OnItemClickListener{
+    public class SpinnerActivity extends Activity implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

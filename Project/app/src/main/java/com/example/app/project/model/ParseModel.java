@@ -42,7 +42,7 @@ public class ParseModel {
         final List<Workout> userWorkouts = new LinkedList<>();
         ParseQuery query = new ParseQuery("Workout");
         ParseUser currentUser = ParseUser.getCurrentUser();
-        query.whereEqualTo("user", currentUser);
+        query.whereEqualTo("users", currentUser);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -60,7 +60,7 @@ public class ParseModel {
 
     public void addWorkoutToUser(Workout workout){
         ParseUser curUser = ParseUser.getCurrentUser();
-
+        
     }
 
 
@@ -90,7 +90,6 @@ public class ParseModel {
 
     public static String login(String email, String pass) {
         final String[] msg = new String[1];
-
         ParseUser.logInInBackground(email, pass, new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
@@ -103,12 +102,11 @@ public class ParseModel {
             }
 
         });
-
-
         return msg[0];
-
-
     }
 
 
+    public void addExersiceToWorkout(Exercise exercises) {
+//        ParseObject
+    }
 }

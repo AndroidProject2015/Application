@@ -23,7 +23,7 @@ public class Workout {
     }
 
     public void add_exercises(Exercise exercises) {
-        this._exercises.add(exercises);
+        ParseModel.getInstance().addExersiceToWorkout(exercises);
     }
 
     public boolean deleteExercise(Exercise exercise){
