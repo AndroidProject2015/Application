@@ -32,19 +32,18 @@ public class NewWorkoutActivity extends ActionBarActivity {
         Button cancelBtn = (Button) findViewById(R.id.cancelBtn);
         final Workout workout = new Workout("1",muscleGroup.getText().toString(), workoutName.getText().toString());
 
-//        workout.setDayOfWeek("1");
-//        workout.setMuscleGroup(muscleGroup.getText().toString());
-//        workout.setWorkoutName(workoutName.getText().toString());
-        final ExerciseToWorkoutFragment fragment =
-                (ExerciseToWorkoutFragment) getFragmentManager().findFragmentById(R.id.exerciseFragment);
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(fragment);
-        fragmentTransaction.commit();
+        workout.setDayOfWeek("1");
+        workout.setMuscleGroup(muscleGroup.getText().toString());
+        workout.setWorkoutName(workoutName.getText().toString());
+//        final ExFragment fragment = new ExFragment();
+//        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        fragmentTransaction.hide(fragment);
+//        fragmentTransaction.commit();
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ParseModel.getInstance().addWorkoutToUser(workout);
-                fragmentTransaction.show(fragment);
+//                ParseModel.getInstance().addWorkoutToUser(workout);
+//                fragmentTransaction.show(fragment);
             }
         });
 
