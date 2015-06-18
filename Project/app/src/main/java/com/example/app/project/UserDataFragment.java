@@ -48,9 +48,10 @@ public class UserDataFragment extends Fragment {
         TextView name = (TextView) v.findViewById(R.id.name);
         TextView height = (TextView) v.findViewById(R.id.height);
         TextView bmi = (TextView) v.findViewById(R.id.bmi);
+        TextView weight = (TextView) v.findViewById(R.id.weight);
 
-        //String n = user.getString("name");
-        //String h = user.getNumber("height").toString();
+
+
 
 
 
@@ -58,6 +59,7 @@ public class UserDataFragment extends Fragment {
 
         name.setText(user.getString("name"));
         height.setText(user.getNumber("height").toString());
+        weight.setText(user.getNumber("weight").toString());
         bmi.setText(user.getNumber("bmi").toString());
 
         return v;
