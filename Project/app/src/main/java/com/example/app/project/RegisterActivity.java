@@ -93,7 +93,7 @@ public class RegisterActivity extends ActionBarActivity {
             return;
         }
 
-        Double bmi = Double.valueOf(weight.getText().toString()) / (Math.sqrt(Double.valueOf(height.getText().toString()) / 10));
+        Double bmi = Double.valueOf(weight.getText().toString()) / (Math.sqrt(Double.valueOf(height.getText().toString())/ 10 ));
 
 
         ParseUser user = new ParseUser();
@@ -107,7 +107,7 @@ public class RegisterActivity extends ActionBarActivity {
         user.put("gender", gender.getText().toString());
         user.put("height", Integer.valueOf(height.getText().toString()));
         user.put("weight", Integer.valueOf(weight.getText().toString()));
-        user.put("bMI", bmi);
+        user.put("bmi", bmi);
 
         final Intent mainIntent = new Intent(this, MainActivity.class);
 

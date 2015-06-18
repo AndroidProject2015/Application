@@ -8,7 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.zip.Inflater;
@@ -25,7 +28,8 @@ public class UserDataFragment extends Fragment {
         return fragment;
     }
 
-    public UserDataFragment() {}
+    public UserDataFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,21 +38,27 @@ public class UserDataFragment extends Fragment {
         }
 
 
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_user_data,container,false);
+        final View v = inflater.inflate(R.layout.fragment_user_data, container, false);
         ParseUser user = ParseUser.getCurrentUser();
- //       EditText name =  (EditText)getView().findViewById(R.id.name);
-//        EditText height =  (EditText)v.findViewById(R.id.height);
-//        EditText bmi =  (EditText)v.findViewById(R.id.bmi);
-//
-//        name.setText((CharSequence) user.getDate("name"));
-//        height.setText((CharSequence) user.getDate("height"));
-//        bmi.setText((CharSequence) user.getDate("bmi"));
+        TextView name = (TextView) v.findViewById(R.id.name);
+        TextView height = (TextView) v.findViewById(R.id.height);
+        TextView bmi = (TextView) v.findViewById(R.id.bmi);
+
+        //String n = user.getString("name");
+        //String h = user.getNumber("height").toString();
+
+
+
+
+
+        name.setText(user.getString("name"));
+        height.setText(user.getNumber("height").toString());
+        bmi.setText(user.getNumber("bmi").toString());
 
         return v;
     }
