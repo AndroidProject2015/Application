@@ -29,6 +29,8 @@ public class LoginActivity extends ActionBarActivity {
         {
             Intent mainAvtyvity = new Intent(this,MainActivity.class);
             startActivity(mainAvtyvity);
+            finish();
+
         }
 
 

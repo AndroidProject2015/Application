@@ -95,8 +95,12 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.logout) {
+            ParseUser.logOutInBackground();
+            Intent loginAvtyvity = new Intent(this,LoginActivity.class);
+            startActivity(loginAvtyvity);
+            finish();
+
         }
 
         return super.onOptionsItemSelected(item);
