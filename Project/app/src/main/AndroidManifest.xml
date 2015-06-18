@@ -34,6 +34,14 @@
             android:name=".NewWorkoutActivity"
             android:label="@string/title_activity_new_workout" >
         </activity>
+        <activity
+            android:name=".UserDataActivity"
+            android:label="@string/title_activity_user_data" >
+        </activity>
+        <activity
+            android:name=".EditUserActivity"
+            android:label="@string/title_activity_edit_user" >
+        </activity>
     </application>
 
 </manifest>
