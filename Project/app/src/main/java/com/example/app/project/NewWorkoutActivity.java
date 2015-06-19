@@ -36,11 +36,11 @@ public class NewWorkoutActivity extends ActionBarActivity {
         workout.setDayOfWeek("1");
         workout.setMuscleGroup(muscleGroup.getText().toString());
         workout.setWorkoutName(workoutName.getText().toString());
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        final ExFragment fragment = fragmentManager.findFragmentById(R.id.exFragment);
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(fragment);
-        fragmentTransaction.commit();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        final ExFragment fragment = fragmentManager.findFragmentById(R.id.exFragment);
+//        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        fragmentTransaction.hide(fragment);
+//        fragmentTransaction.commit();
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
