@@ -11,6 +11,7 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_new_workout">NewWorkoutActivity</string>
+    <string name="title_activity_exercise">ExerciseActivity</string>
     <string-array name="dow">
         <item>1</item>
         <item>2</item>

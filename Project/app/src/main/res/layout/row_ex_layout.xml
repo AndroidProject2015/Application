@@ -22,7 +22,7 @@
         android:id="@+id/linkToYoutube"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/workoutName"
+        android:layout_below="@+id/muscleGroup"
         android:text="mediumText"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 </RelativeLayout>

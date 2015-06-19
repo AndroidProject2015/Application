@@ -5,15 +5,30 @@ package com.example.app.project.model;
  */
 public class Exercise {
 
-    String exeiricseName;
+    String exerciseName;
     String muscleGroup;
+    String linkToYouTube;
 
-    public String getExeiricseName() {
-        return exeiricseName;
+    public Exercise(String exerciseName, String muscleGroup, String linkToYouTube) {
+        this.exerciseName = exerciseName;
+        this.muscleGroup = muscleGroup;
+        this.linkToYouTube = linkToYouTube;
     }
 
-    public void setExeiricseName(String exeiricseName) {
-        this.exeiricseName = exeiricseName;
+    public String getLinkToYouTube() {
+        return linkToYouTube;
+    }
+
+    public void setLinkToYouTube(String linkToYouTube) {
+        this.linkToYouTube = linkToYouTube;
+    }
+
+    public String getExerciseName() {
+        return exerciseName;
+    }
+
+    public void setExerciseName(String exeiricseName) {
+        this.exerciseName = exerciseName;
     }
 
     public String getMuscleGroup() {
