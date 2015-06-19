@@ -120,7 +120,7 @@ public class ParseModel {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> data, ParseException e) {
-                List<Exercise> exercises = new LinkedList<>();
+                List<Exercise> exercises = new LinkedList<Exercise>();
                 if (e == null) {
                     for (ParseObject p : data) {
                         String exerciseName = p.getString("exerciseName");

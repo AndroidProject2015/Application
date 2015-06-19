@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class Workout {
 
+    //TODO ad boolean public checkBOx
     String _dayOfWeek;
     String _workoutName;
     String _muscleGroup;

@@ -1,6 +1,7 @@
 package com.example.app.project;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -35,15 +36,17 @@ public class NewWorkoutActivity extends ActionBarActivity {
         workout.setDayOfWeek("1");
         workout.setMuscleGroup(muscleGroup.getText().toString());
         workout.setWorkoutName(workoutName.getText().toString());
-//        final ExFragment fragment = new ExFragment();
-//        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.hide(fragment);
-//        fragmentTransaction.commit();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        final ExFragment fragment = new ExFragment();
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.hide(fragment);
+        fragmentTransaction.commit();
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                ParseModel.getInstance().addWorkoutToUser(workout);
 //                fragmentTransaction.show(fragment);
+//                ExFragment fragment =
             }
         });
 
