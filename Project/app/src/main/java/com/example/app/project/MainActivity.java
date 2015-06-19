@@ -80,7 +80,7 @@ public class MainActivity extends ActionBarActivity {
         userPhys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent userIntent = new Intent(getApplicationContext(), UserActivity.class);
+                Intent userIntent = new Intent(getApplicationContext(), UserDataActivity.class);
                 startActivity(userIntent);
             }
         });
