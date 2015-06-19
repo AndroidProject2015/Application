@@ -9,11 +9,10 @@
     tools:context="com.example.app.project.NewWorkoutActivity">
 
     <fragment
-        android:name="com.example.app.project.ExFragment"
+        android:id="@+id/exFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/exerciseFragment"
-        tools:layout="@layout/fragment_exercise_to_workout" />
+        android:name="com.example.app.project.ExFragment" />
 
     <TextView
         android:id="@+id/workoutNameView"
