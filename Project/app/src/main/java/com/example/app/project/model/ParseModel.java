@@ -37,14 +37,14 @@ public class ParseModel {
 
     public void init(Context context) {
         Parse.initialize(context, "Y3IoszVq3My4l97JfvWeonOfaAcqmwDAWmPopEWT", "jyvKepSR1A6BkZX21GsITJAEi6fnoCCUC3vSCg3F");
-        ParseUser u = ParseUser.getCurrentUser();
-        ParseObject exercise = new ParseObject("Workout");
-        exercise.put("dayOfWeek", "2");
-        exercise.put("workoutName","testRelation");
-        exercise.put("muscleGroup", "chest");
-        exercise.put("public", false);
-        exercise.put("users", u);
-        exercise.saveInBackground();
+//        ParseUser u = ParseUser.getCurrentUser();
+//        ParseObject exercise = new ParseObject("Workout");
+//        exercise.put("dayOfWeek", "2");
+//        exercise.put("workoutName","testRelation");
+//        exercise.put("muscleGroup", "chest");
+//        exercise.put("public", false);
+//        exercise.put("users", u);
+//        exercise.saveInBackground();
     }
 
 //    public interface GetWorkoutListener{
