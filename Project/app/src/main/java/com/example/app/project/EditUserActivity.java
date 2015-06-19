@@ -111,6 +111,8 @@ public class EditUserActivity extends ActionBarActivity {
 
         }
 
+        user.saveInBackground();
+
         finish();
 
 

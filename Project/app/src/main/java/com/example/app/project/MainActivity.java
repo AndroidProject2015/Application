@@ -1,5 +1,6 @@
 package com.example.app.project;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -39,6 +40,13 @@ public class MainActivity extends ActionBarActivity {
         adapter = new CustomAdapter();
         workoutList.setAdapter(adapter);
         progressBar.setVisibility(View.VISIBLE);
+
+
+//        final UserDataFragment fragment = new UserDataFragment();
+//        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        fragmentTransaction.hide(fragment);
+//
+//        fragment.
 
         ParseModel.getInstance().getUserWorkouts(new ParseModel.GetWorkoutsListener() {
             @Override
@@ -154,4 +162,6 @@ public class MainActivity extends ActionBarActivity {
         Intent wo = new Intent(this, WorkoutActivity.class);
         startActivity(wo);
     }
+
+
 }

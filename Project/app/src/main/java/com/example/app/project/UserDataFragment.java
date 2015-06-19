@@ -82,6 +82,23 @@ public class UserDataFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        ParseUser user = ParseUser.getCurrentUser();
+        TextView name = (TextView) getView().findViewById(R.id.name);
+        TextView height = (TextView) getView().findViewById(R.id.height);
+        TextView bmi = (TextView) getView().findViewById(R.id.bmi);
+        TextView weight = (TextView) getView().findViewById(R.id.weight);
+
+        name.setText(user.getString("name"));
+        height.setText(user.getNumber("height").toString());
+        weight.setText(user.getNumber("weight").toString());
+        bmi.setText(user.getNumber("bmi").toString());
+    }
+
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
     }
