@@ -27,7 +27,7 @@ public class Exercise {
         return exerciseName;
     }
 
-    public void setExerciseName(String exeiricseName) {
+    public void setExerciseName(String exerciseName) {
         this.exerciseName = exerciseName;
     }
 
