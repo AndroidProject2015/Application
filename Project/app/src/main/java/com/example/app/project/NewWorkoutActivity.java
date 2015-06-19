@@ -36,8 +36,8 @@ public class NewWorkoutActivity extends ActionBarActivity {
         workout.setDayOfWeek("1");
         workout.setMuscleGroup(muscleGroup.getText().toString());
         workout.setWorkoutName(workoutName.getText().toString());
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        final ExFragment fragment = new ExFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        final ExFragment fragment = fragmentManager.findFragmentById(R.id.exFragment);
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.hide(fragment);
         fragmentTransaction.commit();
