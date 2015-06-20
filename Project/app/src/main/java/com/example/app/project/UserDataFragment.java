@@ -1,6 +1,9 @@
 package com.example.app.project;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -8,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -49,6 +54,17 @@ public class UserDataFragment extends Fragment {
         TextView height = (TextView) v.findViewById(R.id.height);
         TextView bmi = (TextView) v.findViewById(R.id.bmi);
         TextView weight = (TextView) v.findViewById(R.id.weight);
+
+        try {
+
+            byte[] bytes = user.getParseFile("profilePicture").getData();
+            Bitmap b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            ImageView pic = (ImageView) v.findViewById(R.id.userPic);
+            pic.setImageDrawable( new BitmapDrawable(getResources(),b));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
 

@@ -1,17 +1,30 @@
 package com.example.app.project;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+
+import java.io.ByteArrayOutputStream;
 
 
 public class EditUserActivity extends ActionBarActivity {
+
+    ImageButton pic;
+    boolean isProfilePicChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +40,8 @@ public class EditUserActivity extends ActionBarActivity {
         TextView weight = (TextView) findViewById(R.id.weight);
         TextView bmi = (TextView) findViewById(R.id.bmi);
 
+        pic = (ImageButton) findViewById(R.id.profilePic);
+        isProfilePicChanged = false;
 
         name.setText(user.getString("name"));
         email.setText(user.getEmail());
@@ -34,6 +49,18 @@ public class EditUserActivity extends ActionBarActivity {
         height.setText(user.getNumber("height").toString());
         weight.setText(user.getNumber("weight").toString());
         bmi.setText(user.getNumber("bmi").toString());
+
+        try {
+
+            byte[] bytes = user.getParseFile("profilePicture").getData();
+            Bitmap b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            pic.setImageDrawable( new BitmapDrawable(getResources(),b));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
@@ -60,6 +87,8 @@ public class EditUserActivity extends ActionBarActivity {
 
     public void SaveBtn(View v) {
         ParseUser user = ParseUser.getCurrentUser();
+
+
 
         Boolean isHeigetChange = false;
         Boolean isWeightChange = false;
@@ -111,6 +140,25 @@ public class EditUserActivity extends ActionBarActivity {
 
         }
 
+        if(isProfilePicChanged)
+        {
+            Drawable d = ((ImageButton)findViewById(R.id.profilePic)).getDrawable();
+
+            Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] bitmapdata = stream.toByteArray();
+
+            ParseFile imageFile = new ParseFile("image.png", bitmapdata);
+
+            user.put("profilePicture" , imageFile);
+
+
+        }
+
+
+
+
         user.saveInBackground();
 
         finish();
@@ -123,6 +171,30 @@ public class EditUserActivity extends ActionBarActivity {
     public void CancelBtn(View v)
     {
         finish();
+    }
+
+
+    public void profilePic(View v)
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select a profile picture"), 1);
+
+    }
+
+    public void onActivityResult( int reqCode, int resCode , Intent intent)
+    {
+        if (resCode == RESULT_OK)
+        {
+            if (reqCode == 1)
+            {
+                pic.setImageURI(intent.getData());
+                isProfilePicChanged = true;
+
+
+            }
+        }
     }
 
 

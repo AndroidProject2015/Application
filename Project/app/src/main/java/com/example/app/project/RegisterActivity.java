@@ -2,7 +2,11 @@ package com.example.app.project;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,15 +15,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,13 +101,17 @@ public class RegisterActivity extends ActionBarActivity {
             return;
         }
 
-        Double bmi = Double.valueOf(weight.getText().toString()) / (Math.sqrt(Double.valueOf(height.getText().toString())/ 10 ));
+        Double bmi = Double.valueOf(weight.getText().toString()) / (Math.sqrt(Double.valueOf(height.getText().toString()) / 10));
 
 
-        ParseUser user = new ParseUser();
+        final ParseUser user = new ParseUser();
         user.setUsername(email.getText().toString());
         user.setPassword(pass.getText().toString());
         user.setEmail(email.getText().toString());
+
+
+
+
 
 // other fields can be set just like with ParseObject
         user.put("name", fName.getText().toString() + " " + lName.getText().toString());
@@ -109,11 +121,27 @@ public class RegisterActivity extends ActionBarActivity {
         user.put("weight", Integer.valueOf(weight.getText().toString()));
         user.put("bmi", bmi);
 
+
+        Drawable d = getResources().getDrawable(R.mipmap.ic_launcher);
+
+        Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] bitmapdata = stream.toByteArray();
+
+        final ParseFile imageFile = new ParseFile("image.png", bitmapdata);
+
+        //user.put("profilePicture" , imageFile);
+
+
+
         final Intent mainIntent = new Intent(this, MainActivity.class);
 
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
+                    user.put("profilePicture" , imageFile);
+                    user.saveInBackground();
                     startActivity(mainIntent);
                     finish();
                 } else {

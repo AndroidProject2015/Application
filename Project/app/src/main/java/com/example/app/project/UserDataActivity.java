@@ -1,13 +1,18 @@
 package com.example.app.project;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 
@@ -55,6 +60,17 @@ public class UserDataActivity extends ActionBarActivity {
         height.setText(user.getNumber("height").toString());
         weight.setText(user.getNumber("weight").toString());
         bmi.setText(user.getNumber("bmi").toString());
+
+        try {
+
+            byte[] bytes = user.getParseFile("profilePicture").getData();
+            Bitmap b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            ImageView pic = (ImageView) findViewById(R.id.userPic);
+            pic.setImageDrawable( new BitmapDrawable(getResources(),b));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 

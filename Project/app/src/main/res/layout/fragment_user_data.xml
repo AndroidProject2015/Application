@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
         android:layout_alignParentStart="true"
-        />
+        android:maxHeight="70dp"
+        android:maxWidth="70dp"
+        android:adjustViewBounds="true" />
 
     <TextView
         android:id="@+id/name"
