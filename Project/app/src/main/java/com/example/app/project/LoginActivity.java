@@ -25,13 +25,13 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         ParseModel.getInstance().init(getApplicationContext());
 
-//        if (ParseUser.getCurrentUser() != null)
-//        {
-//            Intent mainAvtyvity = new Intent(this,MainActivity.class);
-//            startActivity(mainAvtyvity);
-//            finish();
-//
-//        }
+        if (ParseUser.getCurrentUser() != null)
+        {
+            Intent mainAvtyvity = new Intent(this,MainActivity.class);
+            startActivity(mainAvtyvity);
+            finish();
+
+        }
 
 
     }
