@@ -15,6 +15,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_user_data" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/mainFragmentContainer"></LinearLayout>
+    <!--<fragment-->
+        <!--android:id="@+id/exFrgWorkout"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:name="com.example.app.project.ExFragment" />-->
 
     <ProgressBar
         android:layout_width="fill_parent"
@@ -60,4 +70,6 @@
             android:layout_height="match_parent"
             android:src="@drawable/muscle" />
     </LinearLayout>
+
+
 </LinearLayout>

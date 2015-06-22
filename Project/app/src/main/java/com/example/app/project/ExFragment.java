@@ -41,11 +41,19 @@ public class ExFragment extends ListFragment {
 
     }
 
+    public void showExerecise(String w){
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
 //        return super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_exercise, null, false);
+        return inflater.inflate(R.layout.fragment_exercise, container, false);
+    }
+
+    public static void obBackPressed() {
+
     }
 
     class CustomAdapter extends BaseAdapter {
@@ -70,6 +78,7 @@ public class ExFragment extends ListFragment {
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.row_ex_layout, null);
+
             }
 
             TextView link2You = (TextView) view.findViewById(R.id.linkToYoutube);

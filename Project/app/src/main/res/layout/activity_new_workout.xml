@@ -8,11 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.app.project.NewWorkoutActivity">
 
-    <fragment
-        android:id="@+id/exFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:name="com.example.app.project.ExFragment" />
+
 
     <TextView
         android:id="@+id/workoutNameView"
@@ -80,5 +76,9 @@
         android:text="CANCEL" />
 
 
-
+    <fragment
+        android:id="@+id/exFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.example.app.project.ExFragment" />
 </RelativeLayout>

@@ -55,24 +55,16 @@ public class UserDataFragment extends Fragment {
         TextView bmi = (TextView) v.findViewById(R.id.bmi);
         TextView weight = (TextView) v.findViewById(R.id.weight);
 
-        try {
-
-            byte[] bytes = user.getParseFile("profilePicture").getData();
-            Bitmap b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            ImageView pic = (ImageView) v.findViewById(R.id.userPic);
-            pic.setImageDrawable( new BitmapDrawable(getResources(),b));
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
-
-
-
+//        try {
+//
+//            byte[] bytes = user.getParseFile("profilePicture").getData();
+//            Bitmap b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//            ImageView pic = (ImageView) v.findViewById(R.id.userPic);
+//            pic.setImageDrawable( new BitmapDrawable(getResources(),b));
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
         name.setText(user.getString("name"));
         height.setText(user.getNumber("height").toString());
         weight.setText(user.getNumber("weight").toString());
@@ -87,8 +79,6 @@ public class UserDataFragment extends Fragment {
 //       try {
 //            mListener = (OnFragmentInteractionListener) activity;
 //        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
 //        }
     }
 

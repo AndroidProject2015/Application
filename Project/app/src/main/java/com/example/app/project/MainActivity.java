@@ -1,19 +1,23 @@
 package com.example.app.project;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app.project.model.ParseModel;
 import com.example.app.project.model.Workout;
@@ -30,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
     public List<Workout> workoutData = new LinkedList<Workout>();
     ProgressBar progressBar;
     CustomAdapter adapter;
+    ExFragment exFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +46,6 @@ public class MainActivity extends ActionBarActivity {
         workoutList.setAdapter(adapter);
         progressBar.setVisibility(View.VISIBLE);
 
-
-//        final UserDataFragment fragment = new UserDataFragment();
-//        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.hide(fragment);
-//
-//        fragment.
 
         ParseModel.getInstance().getUserWorkouts(new ParseModel.GetWorkoutsListener() {
             @Override
@@ -60,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
 
         ImageButton addWorkout = (ImageButton) findViewById(R.id.addWorkout);
         ImageButton workouts = (ImageButton) findViewById(R.id.workouts);
-        ImageButton exerciseList = (ImageButton) findViewById(R.id.exercises);
+        final ImageButton exerciseList = (ImageButton) findViewById(R.id.exercises);
         ImageButton userPhys = (ImageButton) findViewById(R.id.userPhys);
 
         addWorkout.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +93,38 @@ public class MainActivity extends ActionBarActivity {
         });
 
 
+        workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(), "item click " + i, Toast.LENGTH_LONG).show();
+                exFragment = new ExFragment();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.mainFragmentContainer, exFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+//        exFragment.getView().setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+//                return false;
+//            }
+//        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(exFragment != null){
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.hide(exFragment);
+//            ft.addToBackStack(null);
+            ft.commit();
+            exFragment=null;
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -121,6 +152,7 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
     class CustomAdapter extends BaseAdapter {
 
