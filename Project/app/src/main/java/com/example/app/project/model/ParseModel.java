@@ -92,7 +92,7 @@ public class ParseModel {
                             String muscleGroup = po.getString("muscleGroup");
                             String day = po.getString("dayOfWeek");
                             Workout w = new Workout(day, name, muscleGroup);
-                            w.setParseWorkoute(po);
+                            w.setParseWorkout(po);
                             userWorkouts.add(w);
                         }
 
@@ -123,7 +123,7 @@ public class ParseModel {
                             String dayOfWeek = p.getString("dayOfWeek");
                             String muscleGroup = p.getString("muscleGroup");
                             Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
-                            w.setParseWorkoute(p);
+                            w.setParseWorkout(p);
                             workouts.add(w);
                         }
                     }
@@ -189,7 +189,7 @@ public class ParseModel {
                             String dayOfWeek = p.getString("dayOfWeek");
                             String muscleGroup = p.getString("muscleGroup");
                             Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
-                            w.setParseWorkoute(p);
+                            w.setParseWorkout(p);
                             workouts.add(w);
                         }
                     }
@@ -288,7 +288,7 @@ public class ParseModel {
                                                 String dayOfWeek = p.getString("dayOfWeek");
                                                 String muscleGroup = p.getString("muscleGroup");
                                                 Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
-                                                w.setParseWorkoute(p);
+                                                w.setParseWorkout(p);
                                                 workouts.add(w);
                                             }
                                         }

@@ -1,6 +1,7 @@
 package com.example.app.project.model;
 
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class Workout {
         return this._workoutName;
     }
 
-    public void  setParseWorkoute(ParseObject workout) {this._workout = workout;}
+    public void  setParseWorkout(ParseObject workout) {this._workout = workout;}
 
     public ParseObject getParseWorkout(){return  this._workout;}
 
