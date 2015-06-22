@@ -10,6 +10,7 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.util.LinkedList;
@@ -65,19 +66,36 @@ public class ParseModel {
 
     public void getUserWorkouts(final GetWorkoutsListener listener) {
         ParseQuery query = new ParseQuery("Workout");
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        query.whereEqualTo("users", currentUser);
+        final ParseUser currentUser = ParseUser.getCurrentUser();
+        //query.whereEqualTo("workoutUsers", currentUser);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 List<Workout> userWorkouts = new LinkedList<>();
                 if (e == null) {
                     for (ParseObject po : parseObjects) {
-                        String name = po.getString("workoutName");
-                        String muscleGroup = po.getString("muscleGroup");
-                        String day = po.getString("dayOfWeek");
-                        Workout w = new Workout(day, name, muscleGroup);
-                        userWorkouts.add(w);
+                        Boolean conlains = false;
+
+                        List<ParseUser> l = po.getList("workoutUsers");
+                        for(ParseUser p : l)
+                        {
+                            if (p.hasSameId(currentUser))
+                            {
+                                conlains = true;
+                                break;
+                            }
+                        }
+
+                        if (conlains)
+                        {
+                            String name = po.getString("workoutName");
+                            String muscleGroup = po.getString("muscleGroup");
+                            String day = po.getString("dayOfWeek");
+                            Workout w = new Workout(day, name, muscleGroup);
+                            w.setParseWorkoute(po);
+                            userWorkouts.add(w);
+                        }
+
                     }
                 }
                 listener.onResult(userWorkouts);
@@ -85,10 +103,10 @@ public class ParseModel {
         });
     }
 
-    public void addWorkoutToUser(Workout workout) {
-        ParseUser curUser = ParseUser.getCurrentUser();
-
-    }
+//    public void addWorkoutToUser(Workout workout) {
+//        ParseUser curUser = ParseUser.getCurrentUser();
+//
+//    }
 
 
     public void getAllWorkouts(final GetWorkoutsListener listener) {
@@ -105,6 +123,7 @@ public class ParseModel {
                             String dayOfWeek = p.getString("dayOfWeek");
                             String muscleGroup = p.getString("muscleGroup");
                             Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
+                            w.setParseWorkoute(p);
                             workouts.add(w);
                         }
                     }
@@ -140,19 +159,37 @@ public class ParseModel {
     public void getGlobalWorkOut(final GetWorkoutsListener listener) {
 
         ParseQuery query = new ParseQuery("Workout");
-        query.whereNotEqualTo("users", ParseUser.getCurrentUser());
+        //query.whereNotEqualTo("workoutUsers", ParseUser.getCurrentUser());
 
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> data, ParseException e) {
                 List<Workout> workouts = new LinkedList<>();
                 if (e == null) {
+                    ParseUser currentUser = ParseUser.getCurrentUser();
                     for (ParseObject p : data) {
-                        if (p.getBoolean("public")) {
+
+                        List<ParseUser> l = p.getList("workoutUsers");
+                        Boolean conlains = false;
+
+                        for(ParseUser po : l)
+                        {
+                            if (po.hasSameId(currentUser))
+                            {
+                                conlains = true;
+                                break;
+                            }
+                        }
+
+
+
+
+                        if (p.getBoolean("public") && !conlains ) {
                             String workoutName = p.getString("workoutName");
                             String dayOfWeek = p.getString("dayOfWeek");
                             String muscleGroup = p.getString("muscleGroup");
                             Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
+                            w.setParseWorkoute(p);
                             workouts.add(w);
                         }
                     }
@@ -188,6 +225,8 @@ public class ParseModel {
 
     public void getSearchWorkOut(final String[] searchCredentials, final GetWorkoutsListener listener) {
 
+
+
         ParseQuery q = ParseQuery.getQuery("_User");
 
         if (searchCredentials[1].length()!= 0)
@@ -204,10 +243,12 @@ public class ParseModel {
                     for (ParseObject p : data) {
 
                         ParseQuery query = new ParseQuery("Workout");
-                        query.whereNotEqualTo("users", ParseUser.getCurrentUser());
+                        //query.whereNotEqualTo("workoutUsers", ParseUser.getCurrentUser());
+
+
 
                         if (searchCredentials[1].length() != 0) {
-                            query.whereEqualTo("users", (ParseUser) p);
+                            query.whereEqualTo("users",  p);
                         }
 
 
@@ -227,13 +268,29 @@ public class ParseModel {
                             public void done(List<ParseObject> data, ParseException e) {
                                 List<Workout> workouts = new LinkedList<>();
                                 if (e == null) {
+                                    ParseUser currentUser = ParseUser.getCurrentUser();
                                     for (ParseObject p : data) {
-                                        if (p.getBoolean("public")) {
-                                            String workoutName = p.getString("workoutName");
-                                            String dayOfWeek = p.getString("dayOfWeek");
-                                            String muscleGroup = p.getString("muscleGroup");
-                                            Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
-                                            workouts.add(w);
+                                        {
+                                            List<ParseUser> l = p.getList("workoutUsers");
+                                            Boolean conlains = false;
+
+                                            for(ParseUser po : l)
+                                            {
+                                                if (po.hasSameId(currentUser))
+                                                {
+                                                    conlains = true;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (p.getBoolean("public") && !conlains) {
+                                                String workoutName = p.getString("workoutName");
+                                                String dayOfWeek = p.getString("dayOfWeek");
+                                                String muscleGroup = p.getString("muscleGroup");
+                                                Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
+                                                w.setParseWorkoute(p);
+                                                workouts.add(w);
+                                            }
                                         }
                                     }
                                 }
@@ -249,8 +306,21 @@ public class ParseModel {
             }
         });
 
-       // ParseUser u = (ParseUser) q.findInBackground().getResult();
 
+
+
+
+    }
+
+    public void addUserToWorkout(ParseObject w) {
+
+        List<ParseUser> workoutUsers = w.getList("workoutUsers");
+
+
+        workoutUsers.add(ParseUser.getCurrentUser());
+
+        w.put("workoutUsers", workoutUsers);
+        w.saveInBackground();
 
 
     }

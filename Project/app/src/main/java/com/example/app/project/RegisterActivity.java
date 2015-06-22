@@ -71,9 +71,12 @@ public class RegisterActivity extends ActionBarActivity {
         EditText pass = (EditText) findViewById(R.id.pass1);
         EditText fName = (EditText) findViewById(R.id.fName);
         EditText lName = (EditText) findViewById(R.id.lName);
+        EditText birthDate = (EditText) findViewById(R.id.date);
         EditText height = (EditText) findViewById(R.id.height);
         EditText weight = (EditText) findViewById(R.id.weight);
         RadioButton gender = (RadioButton) findViewById(((RadioGroup) findViewById(R.id.gender)).getCheckedRadioButtonId());
+
+
 
         if (!IsEmailValid(email.getText().toString())) {
             email.requestFocus();
@@ -115,7 +118,7 @@ public class RegisterActivity extends ActionBarActivity {
 
 // other fields can be set just like with ParseObject
         user.put("name", fName.getText().toString() + " " + lName.getText().toString());
-        user.put("birthDate", fName.getText().toString());
+        user.put("birthDate", birthDate.getText().toString());
         user.put("gender", gender.getText().toString());
         user.put("height", Integer.valueOf(height.getText().toString()));
         user.put("weight", Integer.valueOf(weight.getText().toString()));

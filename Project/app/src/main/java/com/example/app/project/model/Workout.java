@@ -1,5 +1,7 @@
 package com.example.app.project.model;
 
+import com.parse.ParseObject;
+
 import java.util.List;
 
 /**
@@ -13,10 +15,13 @@ public class Workout {
     String _muscleGroup;
     List<Exercise> _exercises;
 
-    public Workout(String dayOfWeek, String muscleGroup, String workoutName){
+    ParseObject _workout;
+
+    public Workout(String dayOfWeek, String muscleGroup, String workoutName ){
         this._dayOfWeek = dayOfWeek;
         this._muscleGroup = muscleGroup;
         this._workoutName = workoutName;
+
     }
 
     public List<Exercise> get_exercises() {
@@ -59,5 +64,9 @@ public class Workout {
     public String getWorkoutName() {
         return this._workoutName;
     }
+
+    public void  setParseWorkoute(ParseObject workout) {this._workout = workout;}
+
+    public ParseObject getParseWorkout(){return  this._workout;}
 
 }
