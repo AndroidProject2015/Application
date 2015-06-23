@@ -153,6 +153,23 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        progressBar.setVisibility(View.VISIBLE);
+
+
+        ParseModel.getInstance().getUserWorkouts(new ParseModel.GetWorkoutsListener() {
+            @Override
+            public void onResult(List<Workout> w) {
+                progressBar.setVisibility(View.GONE);
+                workoutData = w;
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
 
     class CustomAdapter extends BaseAdapter {
 
