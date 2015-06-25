@@ -89,7 +89,6 @@ public class NewWorkoutActivity extends ActionBarActivity {
         });
 
 
-//        spinner.setOnClickListener();
     }
 
     @Override
