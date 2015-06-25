@@ -13,6 +13,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class ParseModel {
     final public boolean login = false;
     final static int VERSION = 1;
+    private int limit = 0;
     private final static ParseModel instance = new ParseModel();
 
     public interface GetWorkoutsListener {
@@ -149,6 +151,35 @@ public class ParseModel {
                 exercisesListener.onResult(exercises);
             }
         });
+    }
+
+    public void getAllExercisesAsync(final GetExerciseListener exercisesListener) {
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Exercise");
+        query.orderByAscending("createdAt");
+        // Set the limit of objects to show
+        query.setLimit(limit+=10);
+        List<ParseObject> parseObjects;
+        try {
+            parseObjects = query.find();// InBackground(new FindCallback<ParseObject>() {
+
+//            @Override
+//            public void done(List<ParseObject> list, ParseException e) {
+                List<Exercise> exercises = new ArrayList<Exercise>();
+//                if (e == null) {
+                    for (ParseObject exercise : parseObjects) {
+                        String exerciseName = exercise.getString("exerciseName");
+                        String muscleGroup = exercise.getString("muscleGroup");
+                        String linkToYouTube = exercise.getString("linkToYouTube");
+                        Exercise ex = new Exercise(exerciseName, muscleGroup, linkToYouTube);
+                        exercises.add(ex);
+                    }
+//                }
+                exercisesListener.onResult(exercises);
+//            }
+//        });
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getGlobalWorkOut(final GetWorkoutsListener listener) {

@@ -18,11 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.app.project.model.Exercise;
+import com.example.app.project.model.ParseModel;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -156,25 +158,32 @@ public class ExerciseActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params) {
             // Create the array
             exerciseList = new ArrayList<Exercise>();
-            try {
-                // Locate the class table named "Exercise" in Parse.com
-                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
-                        "Exercise");
-                query.orderByAscending("createdAt");
-                // Set the limit of objects to show
-                query.setLimit(limit);
-                ob = query.find();
-                for (ParseObject exercise : ob) {
-                    String exerciseName = exercise.getString("exerciseName");
-                    String muscleGroup = exercise.getString("muscleGroup");
-                    String linkToYouTube = exercise.getString("linkToYouTube");
-                    Exercise ex = new Exercise(exerciseName, muscleGroup, linkToYouTube);
-                    exerciseList.add(ex);
+            ParseModel.getInstance().getAllExercisesAsync(new ParseModel.GetExerciseListener() {
+                @Override
+                public void onResult(List<Exercise> e) {
+                    exerciseList = e;
                 }
-            } catch (ParseException e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
+            });
+
+            // Locate the class table named "Exercise" in Parse.com
+//            try {
+//                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
+//                        "Exercise");
+//                query.orderByAscending("createdAt");
+//                // Set the limit of objects to show
+//                query.setLimit(limit);
+//                ob = query.find();
+//                for (ParseObject exercise : ob) {
+//                    String exerciseName = exercise.getString("exerciseName");
+//                    String muscleGroup = exercise.getString("muscleGroup");
+//                    String linkToYouTube = exercise.getString("linkToYouTube");
+//                    Exercise ex = new Exercise(exerciseName, muscleGroup, linkToYouTube);
+//                    exerciseList.add(ex);
+//                }
+//            } catch (ParseException e) {
+//                Log.e("Error", e.getMessage());
+//                e.printStackTrace();
+//            }
             return null;
         }
 
@@ -235,27 +244,33 @@ public class ExerciseActivity extends ActionBarActivity {
             protected Void doInBackground(Void... params) {
                 // Create the array
                 exerciseList = new ArrayList<Exercise>();
-                try {
-                    // Locate the class table named "Exercise" in Parse.com
-                    ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
-                            "Exercise");
-                    query.orderByAscending("createdAt");
-                    // Add 10 results to the default limit
-                    query.setLimit(limit += 10);
-                    ob = query.find();
-                    if (ob.size() != 0) {
-                        for (ParseObject exercise : ob) {
-                            String exerciseName = exercise.getString("exerciseName");
-                            String muscleGroup = exercise.getString("muscleGroup");
-                            String linkToYouTube = exercise.getString("linkToYouTube");
-                            Exercise ex = new Exercise(exerciseName, muscleGroup, linkToYouTube);
-                            exerciseList.add(ex);
-                        }
+                ParseModel.getInstance().getAllExercisesAsync(new ParseModel.GetExerciseListener() {
+                    @Override
+                    public void onResult(List<Exercise> e) {
+                        exerciseList = e;
                     }
-                } catch (ParseException e) {
-                    Log.e("Error", e.getMessage());
-                    e.printStackTrace();
-                }
+                });
+//                try {
+//                    // Locate the class table named "Exercise" in Parse.com
+//                    ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
+//                            "Exercise");
+//                    query.orderByAscending("createdAt");
+//                    // Add 10 results to the default limit
+//                    query.setLimit(limit += 10);
+//                    ob = query.find();
+//                    if (ob.size() != 0) {
+//                        for (ParseObject exercise : ob) {
+//                            String exerciseName = exercise.getString("exerciseName");
+//                            String muscleGroup = exercise.getString("muscleGroup");
+//                            String linkToYouTube = exercise.getString("linkToYouTube");
+//                            Exercise ex = new Exercise(exerciseName, muscleGroup, linkToYouTube);
+//                            exerciseList.add(ex);
+//                        }
+//                    }
+//                } catch (ParseException e) {
+//                    Log.e("Error", e.getMessage());
+//                    e.printStackTrace();
+//                }
                 return null;
             }
 

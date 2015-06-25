@@ -19,6 +19,8 @@ import com.example.app.project.model.Exercise;
 import com.example.app.project.model.ParseModel;
 import com.example.app.project.model.Workout;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,11 +58,22 @@ public class ExFragment extends ListFragment {
 
     }
 
+    private static ArrayList selected = new ArrayList();
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        exercises.add(exData.get(position));
-        l.getChildAt(position).setBackgroundColor(Color.GRAY);
+        if( !selected.contains(position)){
+            exercises.add(exData.get(position));
+            selected.add(position);
+            l.getChildAt(position).setBackgroundColor(Color.GRAY);
+        }
+        else {
+            exercises.remove(exData.get(position));
+            selected.remove(position);
+            l.getChildAt(position).setBackgroundColor(Color.GREEN);
+
+        }
+
         Log.i("FragmentList", "Item clicked: " + id);
 
     }
