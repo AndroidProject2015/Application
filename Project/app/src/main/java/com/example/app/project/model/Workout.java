@@ -15,13 +15,16 @@ public class Workout {
     String _workoutName;
     String _muscleGroup;
     List<Exercise> _exercises;
+    boolean _isPublic;
+    String id;
 
     ParseObject _workout;
 
-    public Workout(String dayOfWeek, String muscleGroup, String workoutName ){
+    public Workout(String dayOfWeek, String muscleGroup, String workoutName, boolean isPublic ){
         this._dayOfWeek = dayOfWeek;
         this._muscleGroup = muscleGroup;
         this._workoutName = workoutName;
+        this._isPublic = isPublic;
 
     }
 

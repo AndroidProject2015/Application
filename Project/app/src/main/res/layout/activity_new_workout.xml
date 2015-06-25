@@ -76,9 +76,14 @@
         android:text="CANCEL" />
 
 
-    <fragment
-        android:id="@+id/exFragment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.example.app.project.ExFragment" />
+        android:orientation="vertical"
+        android:id="@+id/exerciseFragmentContainer"></LinearLayout>
+    <!--<fragment-->
+        <!--android:id="@+id/exFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:name="com.example.app.project.ExFragment" />-->
 </RelativeLayout>

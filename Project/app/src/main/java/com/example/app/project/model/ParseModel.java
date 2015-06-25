@@ -91,7 +91,7 @@ public class ParseModel {
                             String name = po.getString("workoutName");
                             String muscleGroup = po.getString("muscleGroup");
                             String day = po.getString("dayOfWeek");
-                            Workout w = new Workout(day, name, muscleGroup);
+                            Workout w = new Workout(day, name, muscleGroup, false);
                             w.setParseWorkout(po);
                             userWorkouts.add(w);
                         }
@@ -102,11 +102,6 @@ public class ParseModel {
             }
         });
     }
-
-//    public void addWorkoutToUser(Workout workout) {
-//        ParseUser curUser = ParseUser.getCurrentUser();
-//
-//    }
 
 
     public void getAllWorkouts(final GetWorkoutsListener listener) {
@@ -122,7 +117,8 @@ public class ParseModel {
                             String workoutName = p.getString("workoutName");
                             String dayOfWeek = p.getString("dayOfWeek");
                             String muscleGroup = p.getString("muscleGroup");
-                            Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
+                            boolean isPublic = p.getBoolean("public");
+                            Workout w = new Workout(dayOfWeek, muscleGroup, workoutName, isPublic);
                             w.setParseWorkout(p);
                             workouts.add(w);
                         }
@@ -188,7 +184,8 @@ public class ParseModel {
                             String workoutName = p.getString("workoutName");
                             String dayOfWeek = p.getString("dayOfWeek");
                             String muscleGroup = p.getString("muscleGroup");
-                            Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
+                            boolean isPublic = p.getBoolean("public");
+                            Workout w = new Workout(dayOfWeek, muscleGroup, workoutName, isPublic);
                             w.setParseWorkout(p);
                             workouts.add(w);
                         }
@@ -287,7 +284,8 @@ public class ParseModel {
                                                 String workoutName = p.getString("workoutName");
                                                 String dayOfWeek = p.getString("dayOfWeek");
                                                 String muscleGroup = p.getString("muscleGroup");
-                                                Workout w = new Workout(dayOfWeek, muscleGroup, workoutName);
+                                                boolean isPublic = p.getBoolean("public");
+                                                Workout w = new Workout(dayOfWeek, muscleGroup, workoutName, isPublic);
                                                 w.setParseWorkout(p);
                                                 workouts.add(w);
                                             }
@@ -323,5 +321,18 @@ public class ParseModel {
         w.saveInBackground();
 
 
+    }
+
+    public void createWorkout(Workout workout, List<Exercise> exercises) {
+        ParseObject w = new ParseObject("Workout");
+        ParseUser user = ParseUser.getCurrentUser();
+        w.put("dayOfWeek", workout.getDayOfWeek());
+        w.put("workoutName", workout.getWorkoutName());
+        w.put("muscleGroup",workout.getMuscleGroup());
+        w.put("public", false);
+        w.put("dayOfWeek", workout.getDayOfWeek());
+        w.put("workoutUsers", user);
+        w.put("exercises", exercises);
+        w.saveInBackground();
     }
 }
