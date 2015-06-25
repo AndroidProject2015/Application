@@ -3,6 +3,7 @@ package com.example.app.project.model;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -14,10 +15,11 @@ public class Workout {
     String _dayOfWeek;
     String _workoutName;
     String _muscleGroup;
-    List<Exercise> _exercises;
+
+    List<Exercise> _exercises = new LinkedList<Exercise>();
+
     boolean _isPublic;
     String id;
-
     ParseObject _workout;
 
     public Workout(String dayOfWeek, String muscleGroup, String workoutName, boolean isPublic ){
@@ -28,13 +30,24 @@ public class Workout {
 
     }
 
+    public void set_exercises(List<Exercise> _exercises) {
+        this._exercises=_exercises;
+    }
+
     public List<Exercise> get_exercises() {
         return _exercises;
     }
 
-    public void add_exercises(Exercise exercises) {
-        ParseModel.getInstance().addExersiceToWorkout(exercises);
+    public boolean is_isPublic() {
+        return _isPublic;
     }
+
+    public void set_isPublic(boolean _isPublic) {
+        this._isPublic = _isPublic;
+    }
+//    public void add_exercises(List<Exercise> exercises) {
+//        ParseModel.getInstance().addExersiceToWorkout(exercises);
+//    }
 
     public boolean deleteExercise(Exercise exercise){
         if(this._exercises.contains(exercise)){

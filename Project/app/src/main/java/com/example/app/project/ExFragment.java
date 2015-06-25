@@ -3,6 +3,7 @@ package com.example.app.project;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.app.project.model.Exercise;
 import com.example.app.project.model.ParseModel;
+import com.example.app.project.model.Workout;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,11 +31,14 @@ public class ExFragment extends ListFragment {
     List<Exercise> exData = new LinkedList<Exercise>();
     Context context;
     ListView exListView;
-    List<Exercise> exercises;
+    List<Exercise> exercises = new LinkedList<Exercise>();
+    boolean newWorkout = false;
 
 
-    public interface Listener{
+    public interface Listener {
         public void onFinish(List<Exercise> exercises);
+        public void onEdit();
+        public void onCancel();
     }
 
     Listener listener;
@@ -46,13 +52,6 @@ public class ExFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         adapter = new CustomAdapter();
         setListAdapter(adapter);
-        ParseModel.getInstance().getAllExercises(new ParseModel.GetExerciseListener() {
-            @Override
-            public void onResult(List<Exercise> e) {
-                exData = e;
-                adapter.notifyDataSetChanged();
-            }
-        });
 
 
     }
@@ -60,11 +59,33 @@ public class ExFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+        exercises.add(exData.get(position));
+        l.getChildAt(position).setBackgroundColor(Color.GRAY);
         Log.i("FragmentList", "Item clicked: " + id);
+
     }
 
-    public void showExerecise(String w){
+    public void showExercise(final Workout workout, String option) {
+        switch (option) {
+            case "workoutExercises":
+//                ParseModel.getInstance().getWorkoutExercises(workout, new ParseModel.GetExerciseListener() {
+//                    @Override
+//                    public void onResult(List<Exercise> e) {
+                exData = workout.get_exercises();
 
+//                    }
+//                });
+                break;
+            case "allExercises":
+                newWorkout = true;
+                ParseModel.getInstance().getAllExercises(new ParseModel.GetExerciseListener() {
+                    @Override
+                    public void onResult(List<Exercise> e) {
+                        exData = e;
+                    }
+                });
+                break;
+        }
     }
 
     @Override
@@ -72,21 +93,43 @@ public class ExFragment extends ListFragment {
         context = getActivity().getApplicationContext();
         View view = inflater.inflate(R.layout.fragment_exercise, container, false);
 //        return super.onCreateView(inflater, container, savedInstanceState);
-        Button finishBtn = (Button)view.findViewById(R.id.finishBtn);
+        Button finishBtn = (Button) view.findViewById(R.id.finishBtn);
+//        Button editBtn = (Button) view.findViewById(R.id.editBtn);
+//        Button cancelBtn = (Button) view.findViewById(R.id.cancelBtn);
 
-        finishBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addExercise(view);
-            }
-        });
+        if (newWorkout) {
+//            editBtn.setVisibility(View.GONE);
+//            cancelBtn.setVisibility(View.GONE);
+
+            finishBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addExercise(view);
+                }
+            });
+        }
+        else{
+            finishBtn.setVisibility(View.GONE);
+//            editBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                }
+//            });
+//            cancelBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                }
+//            });
+
+        }
         return view;
     }
 
     private void addExercise(View view) {
         listener.onFinish(exercises);
     }
-
 
 
     class CustomAdapter extends BaseAdapter {

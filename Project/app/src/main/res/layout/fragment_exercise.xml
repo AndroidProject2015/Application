@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical">
 
     <ListView
         android:id="@android:id/list"
-        android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/abc_search_url_text_normal"/>
+        android:layout_weight="1"
+        android:background="@color/abc_search_url_text_normal" />
 
-    <Button
-        android:id="@+id/finishBtn"
+    <LinearLayout
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:layout_gravity="center"
-        android:text="FINISH" />
+        <Button
+            android:id="@+id/finishBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="FINISH" />
+
+        <Button
+            android:id="@+id/edithBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EDIT" />
+
+        <Button
+            android:id="@+id/cancelBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:text="CANCEL" />
+    </LinearLayout>
     <!--<TextView-->
-        <!--android:id="@android:id/empty"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="" />-->
+    <!--android:id="@android:id/empty"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="" />-->
 </LinearLayout>

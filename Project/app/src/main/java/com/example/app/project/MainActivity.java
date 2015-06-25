@@ -1,11 +1,9 @@
 package com.example.app.project;
 
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
     ProgressBar progressBar;
     CustomAdapter adapter;
     ExFragment exFragment;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,26 +57,26 @@ public class MainActivity extends ActionBarActivity {
         });
 
 
-        ImageButton addWorkout = (ImageButton) findViewById(R.id.addWorkout);
-        ImageButton workouts = (ImageButton) findViewById(R.id.workouts);
-        final ImageButton exerciseList = (ImageButton) findViewById(R.id.exercises);
-        ImageButton userPhys = (ImageButton) findViewById(R.id.userPhys);
+        ImageButton addWorkoutBtn = (ImageButton) findViewById(R.id.addWorkout);
+        ImageButton workoutsBtn = (ImageButton) findViewById(R.id.workouts);
+        final ImageButton exerciseListBtn = (ImageButton) findViewById(R.id.exercises);
+        ImageButton userPhysBtn = (ImageButton) findViewById(R.id.userPhys);
 
-        addWorkout.setOnClickListener(new View.OnClickListener() {
+        addWorkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent newWorkoutIntent = new Intent(getApplicationContext(), NewWorkoutActivity.class);
                 startActivity(newWorkoutIntent);
             }
         });
-        workouts.setOnClickListener(new View.OnClickListener() {
+        workoutsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent workoutsIntent = new Intent(getApplicationContext(), WorkoutActivity.class);
                 startActivity(workoutsIntent);
             }
         });
-        exerciseList.setOnClickListener(new View.OnClickListener() {
+        exerciseListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent exerciseIntent = new Intent(getApplicationContext(), ExerciseActivity.class);
@@ -84,7 +84,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        userPhys.setOnClickListener(new View.OnClickListener() {
+        userPhysBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent userIntent = new Intent(getApplicationContext(), UserDataActivity.class);
@@ -92,25 +92,20 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-
+        linearLayout = (LinearLayout)findViewById(R.id.mainFragmentContainer);
+        linearLayout.setVisibility(LinearLayout.GONE);
         workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                linearLayout.setVisibility(LinearLayout.VISIBLE);
                 Toast.makeText(getApplicationContext(), "item click " + i, Toast.LENGTH_LONG).show();
                 exFragment = new ExFragment();
+                exFragment.showExercise(workoutData.get(i), "workoutExercises");
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.add(R.id.mainFragmentContainer, exFragment);
                 fragmentTransaction.commit();
             }
         });
-
-//        exFragment.getView().setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-//                return false;
-//            }
-//        });
-
     }
 
     @Override
@@ -121,6 +116,7 @@ public class MainActivity extends ActionBarActivity {
 //            ft.addToBackStack(null);
             ft.commit();
             exFragment=null;
+            linearLayout.setVisibility(LinearLayout.GONE);
         }
         else {
             super.onBackPressed();

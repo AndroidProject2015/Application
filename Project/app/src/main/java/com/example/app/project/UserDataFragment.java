@@ -41,8 +41,6 @@ public class UserDataFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-
-
     }
 
     @Override

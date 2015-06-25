@@ -9,7 +9,6 @@
     tools:context="com.example.app.project.NewWorkoutActivity">
 
 
-
     <TextView
         android:id="@+id/workoutNameView"
         android:layout_width="wrap_content"
@@ -58,6 +57,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinner"
         android:layout_toEndOf="@+id/muscleGroupView" />
+    <CheckBox
+        android:id="@+id/isPublicBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/muscleGroup" />
 
     <Button
         android:id="@+id/nextBtn"
@@ -76,14 +80,16 @@
         android:text="CANCEL" />
 
 
+
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/exerciseFragmentContainer"></LinearLayout>
+        android:id="@+id/exerciseFragmentContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"></LinearLayout>
     <!--<fragment-->
-        <!--android:id="@+id/exFragment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:name="com.example.app.project.ExFragment" />-->
+    <!--android:id="@+id/exFragment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:name="com.example.app.project.ExFragment" />-->
 </RelativeLayout>

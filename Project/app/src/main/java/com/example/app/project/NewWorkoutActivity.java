@@ -1,7 +1,6 @@
 package com.example.app.project;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -28,6 +28,7 @@ public class NewWorkoutActivity extends ActionBarActivity {
     String day;
     String mGroup;
     String name;
+    boolean isPublic;
     List<Exercise> _exercises;
     Spinner spinner;
     Workout workout;
@@ -39,10 +40,12 @@ public class NewWorkoutActivity extends ActionBarActivity {
         setContentView(R.layout.activity_new_workout);
 
         fragment = new ExFragment();
+        fragment.showExercise(workout, "allExercises");
         final EditText workoutName = (EditText) findViewById(R.id.workoutName);
         final EditText muscleGroup = (EditText) findViewById(R.id.muscleGroup);
         final Button nextBtn = (Button) findViewById(R.id.nextBtn);
         final Button cancelBtn = (Button) findViewById(R.id.cancelBtn);
+        CheckBox isPublicBox = (CheckBox) findViewById(R.id.isPublicBox);
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -50,6 +53,12 @@ public class NewWorkoutActivity extends ActionBarActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        isPublicBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isPublic = ((CheckBox)view).isChecked();
+            }
+        });
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +66,9 @@ public class NewWorkoutActivity extends ActionBarActivity {
                 day = spinner.getSelectedItem().toString();
                 mGroup = muscleGroup.getText().toString();
                 name = workoutName.getText().toString();
+                workout = new Workout(day, mGroup, name, isPublic);
+                ParseModel.getInstance().createWorkout(workout);
+
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.exerciseFragmentContainer, fragment);
                 ft.commit();
@@ -68,13 +80,23 @@ public class NewWorkoutActivity extends ActionBarActivity {
         fragment.setListener(new ExFragment.Listener() {
             @Override
             public void onFinish(List<Exercise> exercises) {
-//                        _exercises = exercises;
-                workout = new Workout(day, mGroup, name, false);
-                ParseModel.getInstance().createWorkout(workout, exercises);
-                //ParseModel.getInstance().addExersiceToWorkout(workout, exercises);
+                workout.set_exercises(exercises);
+                ParseModel.getInstance().setExerciseToWorkout(workout);
                 Intent intent = new Intent(getApplication(), MainActivity.class);
                 startActivity(intent);
+                finish();
+            }
 
+            @Override
+            public void onEdit() {
+
+            }
+
+            @Override
+            public void onCancel() {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.hide(fragment);
+                ft.commit();
             }
         });
 
