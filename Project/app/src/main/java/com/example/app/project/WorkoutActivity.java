@@ -131,8 +131,6 @@ public class WorkoutActivity extends ActionBarActivity {
         String wName = ((EditText)findViewById(R.id.wName)).getText().toString();
         String mGroup = ((EditText)findViewById(R.id.mGroup)).getText().toString();
 
-
-
         ParseModel.getInstance().getSearchWorkOut(new String[]{wName, email, mGroup},new ParseModel.GetWorkoutsListener() {
             @Override
             public void onResult(List<Workout> w) {
