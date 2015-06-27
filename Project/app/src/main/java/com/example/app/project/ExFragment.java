@@ -105,14 +105,13 @@ public class ExFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
         View view = inflater.inflate(R.layout.fragment_exercise, container, false);
-//        return super.onCreateView(inflater, container, savedInstanceState);
         Button finishBtn = (Button) view.findViewById(R.id.finishBtn);
-//        Button editBtn = (Button) view.findViewById(R.id.editBtn);
-//        Button cancelBtn = (Button) view.findViewById(R.id.cancelBtn);
+        Button editBtn = (Button) view.findViewById(R.id.editBtn);
+        Button cancelBtn = (Button) view.findViewById(R.id.cancelBtn);
 
         if (newWorkout) {
-//            editBtn.setVisibility(View.GONE);
-//            cancelBtn.setVisibility(View.GONE);
+            editBtn.setVisibility(View.GONE);
+            cancelBtn.setVisibility(View.GONE);
 
             finishBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

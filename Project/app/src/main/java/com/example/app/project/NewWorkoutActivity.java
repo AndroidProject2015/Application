@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.app.project.model.Exercise;
@@ -24,6 +25,7 @@ import java.util.List;
 
 public class NewWorkoutActivity extends ActionBarActivity {
 
+    LinearLayout linearLayout;
     ExFragment fragment;
     String day;
     String mGroup;
@@ -56,13 +58,17 @@ public class NewWorkoutActivity extends ActionBarActivity {
         isPublicBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isPublic = ((CheckBox)view).isChecked();
+                isPublic = ((CheckBox) view).isChecked();
             }
         });
 
+        linearLayout = (LinearLayout)findViewById(R.id.exerciseFragmentContainer);
+        linearLayout.setVisibility(LinearLayout.GONE);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                linearLayout.setVisibility(LinearLayout.VISIBLE);
+
                 day = spinner.getSelectedItem().toString();
                 mGroup = muscleGroup.getText().toString();
                 name = workoutName.getText().toString();
@@ -72,8 +78,8 @@ public class NewWorkoutActivity extends ActionBarActivity {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.exerciseFragmentContainer, fragment);
                 ft.commit();
-                nextBtn.setVisibility(view.INVISIBLE);
-                cancelBtn.setVisibility(view.INVISIBLE);
+//                nextBtn.setVisibility(view.INVISIBLE);
+//                cancelBtn.setVisibility(view.INVISIBLE);
             }
         });
 
@@ -95,7 +101,8 @@ public class NewWorkoutActivity extends ActionBarActivity {
             @Override
             public void onCancel() {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.hide(fragment);
+//                ft.hide(fragment);
+                getFragmentManager().popBackStack();
                 ft.commit();
             }
         });

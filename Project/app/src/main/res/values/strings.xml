@@ -23,4 +23,5 @@
     </string-array>
     <string name="title_activity_user_data">UserDataActivity</string>
     <string name="title_activity_edit_user">EditUserActivity</string>
+    <string name="title_activity_edit_workout">EditWorkoutActivity</string>
 </resources>
