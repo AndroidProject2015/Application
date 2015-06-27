@@ -157,24 +157,24 @@ public class ParseModel {
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Exercise");
         query.orderByAscending("createdAt");
         // Set the limit of objects to show
-        query.setLimit(limit+=10);
+        query.setLimit(limit += 10);
         List<ParseObject> parseObjects;
         try {
             parseObjects = query.find();// InBackground(new FindCallback<ParseObject>() {
 
 //            @Override
 //            public void done(List<ParseObject> list, ParseException e) {
-                List<Exercise> exercises = new ArrayList<Exercise>();
+            List<Exercise> exercises = new ArrayList<Exercise>();
 //                if (e == null) {
-                    for (ParseObject exercise : parseObjects) {
-                        String exerciseName = exercise.getString("exerciseName");
-                        String muscleGroup = exercise.getString("muscleGroup");
-                        String linkToYouTube = exercise.getString("linkToYouTube");
-                        Exercise ex = new Exercise(exerciseName, muscleGroup, linkToYouTube);
-                        exercises.add(ex);
-                    }
+            for (ParseObject exercise : parseObjects) {
+                String exerciseName = exercise.getString("exerciseName");
+                String muscleGroup = exercise.getString("muscleGroup");
+                String linkToYouTube = exercise.getString("linkToYouTube");
+                Exercise ex = new Exercise(exerciseName, muscleGroup, linkToYouTube);
+                exercises.add(ex);
+            }
 //                }
-                exercisesListener.onResult(exercises);
+            exercisesListener.onResult(exercises);
 //            }
 //        });
         } catch (ParseException e) {
@@ -337,7 +337,7 @@ public class ParseModel {
 
     public void createWorkout(Workout workout) {
         List<ParseUser> users = new LinkedList<ParseUser>();
-        List<ParseObject> exList = new LinkedList<ParseObject>();
+        List<ParseObject> exList = getExercisesNewWorkout(workout);
         ParseUser u = ParseUser.getCurrentUser();
         users.add(u);
         ParseObject w = new ParseObject("Workout");
@@ -357,24 +357,38 @@ public class ParseModel {
 
     }
 
-    public void getWorkoutExercises(final Workout workout, GetExerciseListener listener) {
-        ParseQuery query = ParseQuery.getQuery("Workout");
-        query.whereEqualTo("workoutName", workout.getWorkoutName());
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if (e == null) {
-                    for (ParseObject p : list) {
-                        if (p.get("user") == ParseUser.getCurrentUser()) {
-
-                            p.put("exercises", workout.get_exercises());
-
-                        }
+    public List<ParseObject> getExercisesNewWorkout(final Workout workout) {
+        ParseQuery query = ParseQuery.getQuery("Exercise");
+        List<Exercise> exercises = workout.get_exercises();
+        List<ParseObject> exFromParse = new LinkedList<ParseObject>();
+        try {
+            List<ParseObject> exObj = query.find();
+            for (ParseObject p : exObj) {
+                for (Exercise ex : exercises) {
+                    String parseExName = p.getString("exerciseName");
+                    String exName = ex.getExerciseName();
+                    if ( parseExName.equals(exName)) {
+                        exFromParse.add(p);
                     }
                 }
-
             }
 
-        });
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return exFromParse;
+//        query.findInBackground(new FindCallback<ParseObject>() {
+//            @Override
+//            public void done(List<ParseObject> list, ParseException e) {
+//                if (e == null) {
+//                    for (ParseObject p : list) {
+//
+//                        if(p.getString("exerciseName")== )
+//                    }
+//                }
+//
+//            }
+//
+//        });
     }
 }

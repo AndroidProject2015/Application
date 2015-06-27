@@ -58,18 +58,16 @@ public class ExFragment extends ListFragment {
 
     }
 
-    private static ArrayList selected = new ArrayList();
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        if( !selected.contains(position)){
+        if(!exercises.contains(exData.get(position)) ){
             exercises.add(exData.get(position));
-            selected.add(position);
             l.getChildAt(position).setBackgroundColor(Color.GRAY);
         }
         else {
             exercises.remove(exData.get(position));
-            selected.remove(position);
+//            selected.remove(position);
             l.getChildAt(position).setBackgroundColor(Color.GREEN);
 
         }
@@ -106,11 +104,11 @@ public class ExFragment extends ListFragment {
         context = getActivity().getApplicationContext();
         View view = inflater.inflate(R.layout.fragment_exercise, container, false);
         Button finishBtn = (Button) view.findViewById(R.id.finishBtn);
-        Button editBtn = (Button) view.findViewById(R.id.editBtn);
+//        Button editBtn = (Button) view.findViewById(R.id.editBtn);
         Button cancelBtn = (Button) view.findViewById(R.id.cancelBtn);
 
         if (newWorkout) {
-            editBtn.setVisibility(View.GONE);
+//            editBtn.setVisibility(View.GONE);
             cancelBtn.setVisibility(View.GONE);
 
             finishBtn.setOnClickListener(new View.OnClickListener() {

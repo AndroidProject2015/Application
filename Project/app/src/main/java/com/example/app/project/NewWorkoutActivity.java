@@ -73,7 +73,6 @@ public class NewWorkoutActivity extends ActionBarActivity {
                 mGroup = muscleGroup.getText().toString();
                 name = workoutName.getText().toString();
                 workout = new Workout(day, mGroup, name, isPublic);
-                ParseModel.getInstance().createWorkout(workout);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.exerciseFragmentContainer, fragment);
@@ -87,7 +86,8 @@ public class NewWorkoutActivity extends ActionBarActivity {
             @Override
             public void onFinish(List<Exercise> exercises) {
                 workout.set_exercises(exercises);
-                ParseModel.getInstance().setExerciseToWorkout(workout);
+                ParseModel.getInstance().createWorkout(workout);
+//                ParseModel.getInstance().setExerciseToWorkout(workout);
                 Intent intent = new Intent(getApplication(), MainActivity.class);
                 startActivity(intent);
                 finish();
