@@ -33,6 +33,7 @@ public class ExFragment extends ListFragment {
     boolean editExWorkout = false;
     boolean addPressed = false;
     boolean workoutExList = false;
+
     public void setFlagForEditExList(boolean f) {
         editExWorkout = f;
     }
@@ -103,7 +104,9 @@ public class ExFragment extends ListFragment {
                     }
                 });
                 break;
-
+            case "edit":
+                editExWorkout = true;
+                exData = workout.get_exercises();
         }
     }
 
@@ -117,7 +120,7 @@ public class ExFragment extends ListFragment {
         Button editBtn = (Button) view.findViewById(R.id.editBtn);
         Button cancelBtn = (Button) view.findViewById(R.id.cancelBtn);
         Button removeBtn = (Button) view.findViewById(R.id.removeBtn);
-        Button addBtn = (Button)view.findViewById(R.id.addBtn);
+        Button addBtn = (Button) view.findViewById(R.id.addBtn);
 
         //remove all buttons from View
         addBtn.setVisibility(View.GONE);
@@ -159,35 +162,26 @@ public class ExFragment extends ListFragment {
         });
 
 
-
         if (newWorkout) {
             cancelBtn.setVisibility(View.VISIBLE);
             finishBtn.setVisibility(View.VISIBLE);
-
-        } else {
-
-            removeBtn.setVisibility(View.VISIBLE);
-            cancelBtn.setVisibility(View.VISIBLE);
-
-
-            if (!editExWorkout) {
-//                removeBtn.setVisibility(View.GONE);
-                editBtn.setVisibility(View.VISIBLE);
-
-                if(!addPressed) {
-
-
-                    editBtn.setVisibility(View.GONE);
-                    addBtn.setVisibility(View.VISIBLE);
-
-
-
-                }
-
-
-            }
-
         }
+
+        if (workoutExList) {
+            editBtn.setVisibility(View.VISIBLE);
+            cancelBtn.setVisibility(View.VISIBLE);
+        }
+
+        if (editExWorkout) {
+            removeBtn.setVisibility(View.VISIBLE);
+            addBtn.setVisibility(View.VISIBLE);
+            cancelBtn.setVisibility(View.VISIBLE);
+        }
+
+        if (addPressed) {
+            finishBtn.setVisibility(View.VISIBLE);
+        }
+
         return view;
     }
 

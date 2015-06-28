@@ -54,8 +54,11 @@ public class EditWorkoutActivity extends ActionBarActivity {
         });
 
         fragment = new ExFragment();
-        fragment.showExercise(workout, "workoutExercises");
-        fragment.setFlagForEditExList(true);
+        fragment.showExercise(workout, "edit");
+//        fragment.setFlagForEditExList(true);
+
+        frag = new ExFragment();
+        frag.showExercise(workout, "add");
 
         nextBtn = (Button) findViewById(R.id.nextBtn);
         cancelBtn = (Button) findViewById(R.id.cancelBtn);
@@ -98,7 +101,6 @@ public class EditWorkoutActivity extends ActionBarActivity {
                 name = workoutName.getText().toString();
                 workout = new Workout(day, mGroup, name, isPublic);
 
-
                 if (!fragment.isHidden()) {
                     ft.add(R.id.exerciseFragmentContainer, fragment);
                 } else {
@@ -115,7 +117,6 @@ public class EditWorkoutActivity extends ActionBarActivity {
             @Override
             public void onFinish(List<Exercise> exercises) {
                 workout.set_exercises(exercises);
-
             }
 
             @Override
@@ -125,7 +126,11 @@ public class EditWorkoutActivity extends ActionBarActivity {
 
             @Override
             public void onCancel() {
-                linearLayout.setVisibility(LinearLayout.INVISIBLE);
+                linearLayout.setVisibility(LinearLayout.GONE);
+                linearLayout2.setVisibility(LinearLayout.GONE);
+                nextBtn.setVisibility(View.VISIBLE);
+                cancelBtn.setVisibility(View.VISIBLE);
+
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.hide(fragment);
                 ft.commit();
@@ -145,12 +150,12 @@ public class EditWorkoutActivity extends ActionBarActivity {
             @Override
             public void addExercises(List<Exercise> exercises) {
                 linearLayout.setVisibility(LinearLayout.GONE);
-                linearLayout.setVisibility(LinearLayout.VISIBLE);
+                linearLayout2.setVisibility(LinearLayout.VISIBLE);
 
 //                ParseModel.getInstance().updateWorkout(workout);
-                frag = new ExFragment();
+
                 frag.setFlagForEditExList(true);
-                frag.showExercise(workout, "add");
+
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
 //                ft.remove(fragment);
                 ft.add(R.id.exerciseFragmentContainer2, frag);

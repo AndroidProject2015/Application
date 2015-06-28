@@ -442,7 +442,7 @@ public class ParseModel {
                         List<ParseObject> parseEx = exQuery.find();
                         for (ParseObject parseObject : parseEx) {
                             for (ParseObject pEx : exFromWorkout) {
-                                if (p.hasSameId(pEx)) {
+                                if (parseObject.hasSameId(pEx)) {
                                     String mg = parseObject.getString("muscleGroup");
                                     String youTube = parseObject.getString("linkToYouTube");
                                     String exName = parseObject.getString("exerciseName");
