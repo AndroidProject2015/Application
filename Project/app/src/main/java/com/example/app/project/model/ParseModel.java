@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -25,6 +26,9 @@ public class ParseModel {
     final static int VERSION = 1;
     private int limit = 0;
     private final static ParseModel instance = new ParseModel();
+
+
+
 
     public interface GetWorkoutsListener {
         public void onResult(List<Workout> w);
@@ -92,7 +96,34 @@ public class ParseModel {
                             String name = po.getString("workoutName");
                             String muscleGroup = po.getString("muscleGroup");
                             String day = po.getString("dayOfWeek");
-                            Workout w = new Workout(day, name, muscleGroup, false);
+                            boolean isPublic = po.getBoolean("public");
+                            Workout w = new Workout(day, muscleGroup, name, isPublic);
+                            List<Exercise> exercises = new LinkedList<Exercise>();
+
+                            List<ParseObject> exFromWorkout = po.getList("exercises");
+                            ParseQuery exQuery = ParseQuery.getQuery("Exercise");
+
+                            try {
+                                List<ParseObject> parseEx = exQuery.find();
+                                for (ParseObject p : parseEx) {
+                                    for (ParseObject pEx : exFromWorkout) {
+                                        if (p.hasSameId(pEx)) {
+                                            String mg = p.getString("muscleGroup");
+                                            String youTube = p.getString("linkToYouTube");
+                                            String exName = p.getString("exerciseName");
+                                            Exercise ex = new Exercise(exName, mg, youTube);
+                                            exercises.add(ex);
+                                        }
+                                    }
+                                }
+                            } catch (ParseException e1) {
+                                e1.printStackTrace();
+                            }
+
+                            // = po.getParseObject("exercises").fetch();
+
+
+                            w.set_exercises(exercises);
                             w.setParseWorkout(po);
                             userWorkouts.add(w);
                         }
@@ -242,10 +273,6 @@ public class ParseModel {
     }
 
 
-    public void addExersiceToWorkout(Exercise exercises) {
-//        ParseObject
-    }
-
     public void getSearchWorkOut(final String[] searchCredentials, final GetWorkoutsListener listener) {
 
 
@@ -367,7 +394,7 @@ public class ParseModel {
                 for (Exercise ex : exercises) {
                     String parseExName = p.getString("exerciseName");
                     String exName = ex.getExerciseName();
-                    if ( parseExName.equals(exName)) {
+                    if (parseExName.equals(exName)) {
                         exFromParse.add(p);
                     }
                 }
@@ -391,4 +418,103 @@ public class ParseModel {
 //
 //        });
     }
+
+
+    public void getWorkoutByName(final String workoutName, final GetWorkoutsListener listener) {
+        ParseQuery query = ParseQuery.getQuery("Workout");
+        final List<Workout> workouts = new LinkedList<Workout>();
+        try {
+            List<ParseObject> parseObjects = query.find();
+            for (ParseObject p : parseObjects) {
+                String wName = p.getString("workoutName");
+                if (workoutName.equals(wName)) {
+                    String muscleGroup = p.getString("muscleGroup");
+                    String day = p.getString("dayOfWeek");
+                    boolean isPublic = p.getBoolean("public");
+                    Workout w = new Workout(day, muscleGroup, workoutName, isPublic);
+                    w.setId(p.getObjectId());
+                    List<Exercise> exercises = new LinkedList<Exercise>();
+
+                    List<ParseObject> exFromWorkout = p.getList("exercises");
+                    ParseQuery exQuery = ParseQuery.getQuery("Exercise");
+
+                    try {
+                        List<ParseObject> parseEx = exQuery.find();
+                        for (ParseObject parseObject : parseEx) {
+                            for (ParseObject pEx : exFromWorkout) {
+                                if (p.hasSameId(pEx)) {
+                                    String mg = parseObject.getString("muscleGroup");
+                                    String youTube = parseObject.getString("linkToYouTube");
+                                    String exName = parseObject.getString("exerciseName");
+                                    Exercise ex = new Exercise(exName, mg, youTube);
+                                    exercises.add(ex);
+                                }
+                            }
+                        }
+                        w.set_exercises(exercises);
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                    workouts.add(w);
+                }
+            }
+
+            listener.onResult(workouts);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateWorkout(Workout workout) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Workout");
+        query.getInBackground(workout.getId(), new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+
+            }
+        });
+    }
 }
+
+
+
+
+//        query.findInBackground(new FindCallback<ParseObject>() {
+//            @Override
+//            public void done(List<ParseObject> list, ParseException e) {
+//                if (e == null) {
+//                    for (ParseObject p : list) {
+//                        if (workoutName.equals(p.getString("workoutName"))) {
+//                            String muscleGroup = p.getString("muscleGroup");
+//                            String day = p.getString("dayOfWeek");
+//                            boolean isPublic = p.getBoolean("public");
+//                            Workout w = new Workout(day, workoutName, muscleGroup, isPublic);
+//                            List<Exercise> exercises = new LinkedList<Exercise>();
+//
+//                            List<ParseObject> exFromWorkout = p.getList("exercises");
+//                            ParseQuery exQuery = ParseQuery.getQuery("Exercise");
+//
+//                            try {
+//                                List<ParseObject> parseEx = exQuery.find();
+//                                for (ParseObject parseObject : parseEx) {
+//                                    for (ParseObject pEx : exFromWorkout) {
+//                                        if (p.hasSameId(pEx)) {
+//                                            String mg = parseObject.getString("muscleGroup");
+//                                            String youTube = parseObject.getString("linkToYouTube");
+//                                            String exName = parseObject.getString("exerciseName");
+//                                            Exercise ex = new Exercise(exName, mg, youTube);
+//                                            exercises.add(ex);
+//                                        }
+//                                    }
+//                                }
+//                                w.set_exercises(exercises);
+//                            } catch (ParseException e1) {
+//                                e1.printStackTrace();
+//                            }
+//                            workouts.add(w);
+//                        }
+//                    }
+//                }
+//                listener.onResult(workouts);
+//            }
+//        });

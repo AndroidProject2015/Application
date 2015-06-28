@@ -19,6 +19,15 @@ public class Workout {
     List<Exercise> _exercises = new LinkedList<Exercise>();
 
     boolean _isPublic;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     String id;
     ParseObject _workout;
 

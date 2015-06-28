@@ -17,26 +17,44 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/removeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="remove"
+            style="@style/Base.Widget.AppCompat.Button.Borderless" />
+        <Button
             android:id="@+id/finishBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="FINISH" />
+            android:text="FINISH"
+            style="@style/Base.Widget.AppCompat.Button.Borderless" />
 
         <Button
-            android:id="@+id/edithBtn"
+            android:id="@+id/editBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="EDIT" />
+            android:text="EDIT"
+            style="@style/Base.Widget.AppCompat.Button.Borderless" />
 
+        <Button
+            android:id="@+id/addBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:text="add"
+            style="@style/Base.Widget.AppCompat.Button.Borderless" />
         <Button
             android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_weight="1"
-            android:text="CANCEL" />
+            android:text="CANCEL"
+            style="@style/Base.Widget.AppCompat.Button.Borderless" />
     </LinearLayout>
     <!--<TextView-->
     <!--android:id="@android:id/empty"-->

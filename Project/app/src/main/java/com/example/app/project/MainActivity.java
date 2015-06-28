@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app.project.model.Exercise;
 import com.example.app.project.model.ParseModel;
 import com.example.app.project.model.Workout;
 import com.parse.ParseUser;
@@ -96,11 +97,42 @@ public class MainActivity extends ActionBarActivity {
         linearLayout.setVisibility(LinearLayout.GONE);
         workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 linearLayout.setVisibility(LinearLayout.VISIBLE);
                 Toast.makeText(getApplicationContext(), "item click " + i, Toast.LENGTH_LONG).show();
                 exFragment = new ExFragment();
                 exFragment.showExercise(workoutData.get(i), "workoutExercises");
+                exFragment.setListener(new ExFragment.Listener() {
+                    @Override
+                    public void onFinish(List<Exercise> exercises) {
+
+                    }
+
+                    @Override
+                    public void onEdit() {
+                        Intent intent = new Intent(getApplication(), EditWorkoutActivity.class);
+                        intent.putExtra("workout", workoutData.get(i).getWorkoutName());
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.hide(exFragment);
+                        ft.commit();
+                        linearLayout.setVisibility(LinearLayout.GONE);
+                    }
+
+                    @Override
+                    public void onRemove(List<Exercise> exercises) {
+
+                    }
+
+                    @Override
+                    public void addExercises(List<Exercise> exercises) {
+
+                    }
+                });
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.add(R.id.mainFragmentContainer, exFragment);
                 fragmentTransaction.commit();
@@ -113,7 +145,6 @@ public class MainActivity extends ActionBarActivity {
         if(exFragment != null){
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.hide(exFragment);
-//            ft.addToBackStack(null);
             ft.commit();
             exFragment=null;
             linearLayout.setVisibility(LinearLayout.GONE);

@@ -34,7 +34,8 @@ public class NewWorkoutActivity extends ActionBarActivity {
     List<Exercise> _exercises;
     Spinner spinner;
     Workout workout;
-
+    Button nextBtn;
+    Button cancelBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,8 @@ public class NewWorkoutActivity extends ActionBarActivity {
         fragment.showExercise(workout, "allExercises");
         final EditText workoutName = (EditText) findViewById(R.id.workoutName);
         final EditText muscleGroup = (EditText) findViewById(R.id.muscleGroup);
-        final Button nextBtn = (Button) findViewById(R.id.nextBtn);
-        final Button cancelBtn = (Button) findViewById(R.id.cancelBtn);
+        nextBtn = (Button) findViewById(R.id.nextBtn);
+        cancelBtn = (Button) findViewById(R.id.cancelBtn);
         CheckBox isPublicBox = (CheckBox) findViewById(R.id.isPublicBox);
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -62,7 +63,7 @@ public class NewWorkoutActivity extends ActionBarActivity {
             }
         });
 
-        linearLayout = (LinearLayout)findViewById(R.id.exerciseFragmentContainer);
+        linearLayout = (LinearLayout) findViewById(R.id.exerciseFragmentContainer);
         linearLayout.setVisibility(LinearLayout.GONE);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +78,8 @@ public class NewWorkoutActivity extends ActionBarActivity {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.exerciseFragmentContainer, fragment);
                 ft.commit();
-//                nextBtn.setVisibility(view.INVISIBLE);
-//                cancelBtn.setVisibility(view.INVISIBLE);
+                nextBtn.setVisibility(view.INVISIBLE);
+                cancelBtn.setVisibility(view.INVISIBLE);
             }
         });
 
@@ -105,6 +106,16 @@ public class NewWorkoutActivity extends ActionBarActivity {
                 getFragmentManager().popBackStack();
                 ft.commit();
             }
+
+            @Override
+            public void onRemove(List<Exercise> exercises) {
+
+            }
+
+            @Override
+            public void addExercises(List<Exercise> exercises) {
+
+            }
         });
 
 
@@ -125,9 +136,11 @@ public class NewWorkoutActivity extends ActionBarActivity {
         if (fragment != null) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.hide(fragment);
-//            ft.addToBackStack(null);
             ft.commit();
             fragment = null;
+            nextBtn.setVisibility(View.VISIBLE);
+            cancelBtn.setVisibility(View.VISIBLE);
+
         } else {
             super.onBackPressed();
         }
