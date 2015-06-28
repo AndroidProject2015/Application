@@ -28,8 +28,6 @@ public class ParseModel {
     private final static ParseModel instance = new ParseModel();
 
 
-
-
     public interface GetWorkoutsListener {
         public void onResult(List<Workout> w);
     }
@@ -469,12 +467,20 @@ public class ParseModel {
         }
     }
 
-    public void updateWorkout(Workout workout) {
+    public void updateWorkout(final Workout workout) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Workout");
         query.getInBackground(workout.getId(), new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                    parseObject.put("workoutName", workout.getWorkoutName());
+                    parseObject.put("muscleGroup", workout.getMuscleGroup());
+                    parseObject.put("dayOfWeek", workout.getDayOfWeek());
+                    parseObject.put("public", workout.is_isPublic());
+                    parseObject.saveInBackground();
 
+
+                }
             }
         });
     }
@@ -496,19 +502,76 @@ public class ParseModel {
     }
 
     public void removeExerciseFromWorkout(final List<Exercise> exercises, String workoutId) {
+
         ParseQuery query = ParseQuery.getQuery("Workout");
         query.whereEqualTo("objectId", workoutId);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                if(e == null){
-                    for (ParseObject p : list){
+                if (e == null) {
+                    for (ParseObject p : list) {
+
                         List<ParseObject> exercisesList = p.getList("exercises");
-                        if(exercisesList != null){
-                            for (ParseObject parseExercise : exercisesList){
-                                for (Exercise exercise : exercises){
-                                    if (exercise.getExId().equals(parseExercise.getObjectId())){
+                        if (exercisesList != null) {
+                            for (ParseObject parseExercise : exercisesList) {
+                                for (Exercise exercise : exercises) {
+                                    if (exercise.getExId().equals(parseExercise.getObjectId())) {
                                         exercisesList.remove(parseExercise);
+                                    }
+                                }
+                            }
+                            p.put("exercises", exercisesList);
+                            p.saveInBackground();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void addExercisesToWorkout(Workout workout) {
+
+        final List<Exercise> exercises = workout.get_exercises();
+
+        final List<ParseObject> allExerciseList = new LinkedList<ParseObject>();
+        List<ParseObject> tmpList = new LinkedList<ParseObject>();
+        ParseQuery exQuery = ParseQuery.getQuery("Exercise");
+        try {
+            tmpList = exQuery.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(tmpList != null){
+            for (ParseObject p : tmpList){
+                allExerciseList.add(p);
+            }
+        }
+//        exQuery.findInBackground(new FindCallback<ParseObject>() {
+//            @Override
+//            public void done(List<ParseObject> exListFromParse, ParseException e) {
+//                if (e == null) {
+//                    for (ParseObject ex: allExerciseList){
+//                        allExerciseList.add(ex);
+//                    }
+//                }
+//            }
+//        });
+
+        final ParseQuery query = ParseQuery.getQuery("Workout");
+        query.whereEqualTo("objectId", workout.getId());
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    for (ParseObject p : list) {
+
+                        List<ParseObject> exercisesList = p.getList("exercises");
+                        if (allExerciseList != null) {
+                            for (ParseObject parseExercise : allExerciseList) {
+                                for (Exercise exercise : exercises) {
+                                    if (exercise.getExId().equals(parseExercise.getObjectId())) {
+                                        exercisesList.add(parseExercise);
                                     }
                                 }
                             }

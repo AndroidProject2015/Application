@@ -100,7 +100,8 @@ public class EditWorkoutActivity extends ActionBarActivity {
                 mGroup = muscleGroup.getText().toString();
                 name = workoutName.getText().toString();
                 Workout w = new Workout(day, mGroup, name, isPublic);
-
+                w.setId(workout.getId());
+                ParseModel.getInstance().updateWorkout(w);
                 if (!fragment.isHidden()) {
                     ft.add(R.id.exerciseFragmentContainer, fragment);
                 } else {
@@ -146,6 +147,9 @@ public class EditWorkoutActivity extends ActionBarActivity {
                 ft.hide(fragment);
                 ft.commit();
                 ParseModel.getInstance().removeExerciseFromWorkout(exercises, workout.getId());
+                Intent intent1 = new Intent(getApplication(), MainActivity.class);
+                startActivity(intent1);
+
             }
 
             @Override
@@ -157,6 +161,7 @@ public class EditWorkoutActivity extends ActionBarActivity {
                 ft.remove(fragment);
                 ft.add(R.id.exerciseFragmentContainer2, frag);
                 ft.commit();
+
             }
         });
 
@@ -165,7 +170,8 @@ public class EditWorkoutActivity extends ActionBarActivity {
             @Override
             public void onFinish(List<Exercise> exercises) {
                 workout.set_exercises(exercises);
-//                ParseModel.getInstance().createWorkout(workout);
+
+                ParseModel.getInstance().addExercisesToWorkout(workout);
                 Intent intent = new Intent(getApplication(), MainActivity.class);
                 startActivity(intent);
                 finish();
