@@ -168,8 +168,8 @@ public class ExFragment extends ListFragment {
         }
 
         if (workoutExList) {
-//            editBtn.setVisibility(View.VISIBLE);
-//            cancelBtn.setVisibility(View.VISIBLE);
+            editBtn.setVisibility(View.VISIBLE);
+            cancelBtn.setVisibility(View.VISIBLE);
         }
 
         if (editExWorkout) {

@@ -98,6 +98,7 @@ public class ParseModel {
                             String day = po.getString("dayOfWeek");
                             boolean isPublic = po.getBoolean("public");
                             Workout w = new Workout(day, muscleGroup, name, isPublic);
+                            w.setId(po.getObjectId());
                             List<Exercise> exercises = new LinkedList<Exercise>();
 
                             List<ParseObject> exFromWorkout = po.getList("exercises");
@@ -175,6 +176,7 @@ public class ParseModel {
                         String muscleGroup = p.getString("muscleGroup");
                         String linkToYouTube = p.getString("linkToYouTube");
                         Exercise ex = new Exercise(exerciseName, muscleGroup, linkToYouTube);
+                        ex.setExId(p.getObjectId());
                         exercises.add(ex);
                     }
                 }
@@ -202,6 +204,7 @@ public class ParseModel {
                 String muscleGroup = exercise.getString("muscleGroup");
                 String linkToYouTube = exercise.getString("linkToYouTube");
                 Exercise ex = new Exercise(exerciseName, muscleGroup, linkToYouTube);
+                ex.setExId(exercise.getObjectId());
                 exercises.add(ex);
             }
 //                }
@@ -447,6 +450,7 @@ public class ParseModel {
                                     String youTube = parseObject.getString("linkToYouTube");
                                     String exName = parseObject.getString("exerciseName");
                                     Exercise ex = new Exercise(exName, mg, youTube);
+                                    ex.setExId(parseObject.getObjectId());
                                     exercises.add(ex);
                                 }
                             }
@@ -474,9 +478,49 @@ public class ParseModel {
             }
         });
     }
+
+    public void removeWorkout(String id) {
+        ParseQuery query = ParseQuery.getQuery("Workout");
+        query.whereEqualTo("objectId", id);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    for (ParseObject p : list) {
+                        p.deleteInBackground();
+                    }
+                }
+            }
+        });
+
+    }
+
+    public void removeExerciseFromWorkout(final List<Exercise> exercises, String workoutId) {
+        ParseQuery query = ParseQuery.getQuery("Workout");
+        query.whereEqualTo("objectId", workoutId);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if(e == null){
+                    for (ParseObject p : list){
+                        List<ParseObject> exercisesList = p.getList("exercises");
+                        if(exercisesList != null){
+                            for (ParseObject parseExercise : exercisesList){
+                                for (Exercise exercise : exercises){
+                                    if (exercise.getExId().equals(parseExercise.getObjectId())){
+                                        exercisesList.remove(parseExercise);
+                                    }
+                                }
+                            }
+                            p.put("exercises", exercisesList);
+                            p.saveInBackground();
+                        }
+                    }
+                }
+            }
+        });
+    }
 }
-
-
 
 
 //        query.findInBackground(new FindCallback<ParseObject>() {

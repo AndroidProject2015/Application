@@ -32,11 +32,15 @@ public class MainActivity extends ActionBarActivity {
 
     static final int BACK_FROM_NEW_USER_ACTIVITY = 1;
     ListView workoutList;
+    Workout selectedWorkout;
     public List<Workout> workoutData = new LinkedList<Workout>();
     ProgressBar progressBar;
     CustomAdapter adapter;
     ExFragment exFragment;
     LinearLayout linearLayout;
+//    boolean addremoveWorkoutFlag = false;
+//    MenuItem addWorkout;
+    MenuItem removeWorkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +62,12 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        final Button removeWorkout = (Button) findViewById(R.id.removeWorkout);
+//        final Button removeWorkout = (Button) findViewById(R.id.removeWorkout);
         ImageButton addWorkoutBtn = (ImageButton) findViewById(R.id.addWorkout);
         ImageButton workoutsBtn = (ImageButton) findViewById(R.id.workouts);
         final ImageButton exerciseListBtn = (ImageButton) findViewById(R.id.exercises);
         ImageButton userPhysBtn = (ImageButton) findViewById(R.id.userPhys);
-        removeWorkout.setVisibility(View.GONE);
+//        removeWorkout.setVisibility(View.GONE);
         addWorkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,10 +104,13 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 linearLayout.setVisibility(LinearLayout.VISIBLE);
-                removeWorkout.setVisibility(View.VISIBLE);
+//                addWorkout.setVisible(true);
+                removeWorkout.setVisible(true);
+//                removeWorkout.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), "item click " + i, Toast.LENGTH_LONG).show();
                 exFragment = new ExFragment();
-                exFragment.showExercise(workoutData.get(i), "workoutExercises");
+                selectedWorkout = workoutData.get(i);
+                exFragment.showExercise(selectedWorkout, "workoutExercises");
                 exFragment.setListener(new ExFragment.Listener() {
                     @Override
                     public void onFinish(List<Exercise> exercises) {
@@ -159,6 +166,11 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+//        addWorkout = menu.findItem(R.id.addWorkoutMenu);
+        removeWorkout = menu.findItem(R.id.removeWorkoutMenu);
+//        addWorkout.setVisible(false);
+        removeWorkout.setVisible(false);
+
         return true;
     }
 
@@ -169,14 +181,35 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.logout) {
-            ParseUser.logOutInBackground();
-            Intent loginAvtyvity = new Intent(this, LoginActivity.class);
-            startActivity(loginAvtyvity);
-            finish();
+        switch (item.getItemId()){
+            case R.id.logout:
+                ParseUser.logOutInBackground();
+                Intent loginAvtyvity = new Intent(this, LoginActivity.class);
+                startActivity(loginAvtyvity);
+                finish();
+                break;
+//            case R.id.addWorkoutMenu:
+//                break;
+            case R.id.removeWorkoutMenu:
+                linearLayout.setVisibility(View.GONE);
+
+                ParseModel.getInstance().removeWorkout(selectedWorkout.getId());
+                workoutData.remove(selectedWorkout);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.hide(exFragment);
+                fragmentTransaction.commit();
+                break;
 
         }
+        //noinspection SimplifiableIfStatement
+//        if (id == R.id.logout) {
+//            ParseUser.logOutInBackground();
+//            Intent loginAvtyvity = new Intent(this, LoginActivity.class);
+//            startActivity(loginAvtyvity);
+//            finish();
+//
+//        }
+
 
         return super.onOptionsItemSelected(item);
     }

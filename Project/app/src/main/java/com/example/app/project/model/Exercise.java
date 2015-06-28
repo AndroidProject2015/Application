@@ -8,6 +8,15 @@ public class Exercise {
     String exerciseName;
     String muscleGroup;
     String linkToYouTube;
+    String exId;
+
+    public String getExId() {
+        return exId;
+    }
+
+    public void setExId(String exId) {
+        this.exId = exId;
+    }
 
     public Exercise(String exerciseName, String muscleGroup, String linkToYouTube) {
         this.exerciseName = exerciseName;

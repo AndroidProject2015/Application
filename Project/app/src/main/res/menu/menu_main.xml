@@ -3,4 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/logout" android:title="Logout"
         android:orderInCategory="100" app:showAsAction="never" />
+    <!--<item android:id="@+id/addWorkoutMenu"-->
+        <!--android:title="ADD"-->
+        <!--android:orderInCategory="98"-->
+        <!--/>-->
+    <item android:id="@+id/removeWorkoutMenu"
+        android:title="REMOVE"
+        android:orderInCategory="99"
+        />
 </menu>

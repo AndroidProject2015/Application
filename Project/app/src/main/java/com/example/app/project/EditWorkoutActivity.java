@@ -85,7 +85,7 @@ public class EditWorkoutActivity extends ActionBarActivity {
             }
         });
 
-        linearLayout2 = (LinearLayout)findViewById(R.id.exerciseFragmentContainer2);
+        linearLayout2 = (LinearLayout) findViewById(R.id.exerciseFragmentContainer2);
         linearLayout = (LinearLayout) findViewById(R.id.exerciseFragmentContainer);
         linearLayout.setVisibility(LinearLayout.GONE);
         linearLayout2.setVisibility(LinearLayout.GONE);
@@ -99,7 +99,7 @@ public class EditWorkoutActivity extends ActionBarActivity {
                 day = spinner.getSelectedItem().toString();
                 mGroup = muscleGroup.getText().toString();
                 name = workoutName.getText().toString();
-                workout = new Workout(day, mGroup, name, isPublic);
+                Workout w = new Workout(day, mGroup, name, isPublic);
 
                 if (!fragment.isHidden()) {
                     ft.add(R.id.exerciseFragmentContainer, fragment);
@@ -139,12 +139,13 @@ public class EditWorkoutActivity extends ActionBarActivity {
 
             @Override
             public void onRemove(List<Exercise> exercises) {
-                linearLayout.setVisibility(LinearLayout.INVISIBLE);
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                linearLayout.setVisibility(LinearLayout.GONE);
+                nextBtn.setVisibility(View.VISIBLE);
+                cancelBtn.setVisibility(View.VISIBLE);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.hide(fragment);
                 ft.commit();
-//           TODO :
-//                ParseModel.getInstance().removeExerciseFrowWorkout()
+                ParseModel.getInstance().removeExerciseFromWorkout(exercises, workout.getId());
             }
 
             @Override
