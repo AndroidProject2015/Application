@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -57,12 +58,12 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-
+        final Button removeWorkout = (Button) findViewById(R.id.removeWorkout);
         ImageButton addWorkoutBtn = (ImageButton) findViewById(R.id.addWorkout);
         ImageButton workoutsBtn = (ImageButton) findViewById(R.id.workouts);
         final ImageButton exerciseListBtn = (ImageButton) findViewById(R.id.exercises);
         ImageButton userPhysBtn = (ImageButton) findViewById(R.id.userPhys);
-
+        removeWorkout.setVisibility(View.GONE);
         addWorkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,12 +94,13 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        linearLayout = (LinearLayout)findViewById(R.id.mainFragmentContainer);
+        linearLayout = (LinearLayout) findViewById(R.id.mainFragmentContainer);
         linearLayout.setVisibility(LinearLayout.GONE);
         workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 linearLayout.setVisibility(LinearLayout.VISIBLE);
+                removeWorkout.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), "item click " + i, Toast.LENGTH_LONG).show();
                 exFragment = new ExFragment();
                 exFragment.showExercise(workoutData.get(i), "workoutExercises");
@@ -142,14 +144,13 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        if(exFragment != null){
+        if (exFragment != null) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.hide(exFragment);
             ft.commit();
-            exFragment=null;
+            exFragment = null;
             linearLayout.setVisibility(LinearLayout.GONE);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -181,8 +182,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         progressBar.setVisibility(View.VISIBLE);
 
