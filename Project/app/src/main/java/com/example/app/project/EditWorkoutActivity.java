@@ -152,12 +152,8 @@ public class EditWorkoutActivity extends ActionBarActivity {
                 linearLayout.setVisibility(LinearLayout.GONE);
                 linearLayout2.setVisibility(LinearLayout.VISIBLE);
 
-//                ParseModel.getInstance().updateWorkout(workout);
-
-                frag.setFlagForEditExList(true);
-
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.remove(fragment);
+                ft.remove(fragment);
                 ft.add(R.id.exerciseFragmentContainer2, frag);
                 ft.commit();
             }
@@ -167,7 +163,11 @@ public class EditWorkoutActivity extends ActionBarActivity {
         frag.setListener(new ExFragment.Listener() {
             @Override
             public void onFinish(List<Exercise> exercises) {
-
+                workout.set_exercises(exercises);
+//                ParseModel.getInstance().createWorkout(workout);
+                Intent intent = new Intent(getApplication(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
 
             @Override

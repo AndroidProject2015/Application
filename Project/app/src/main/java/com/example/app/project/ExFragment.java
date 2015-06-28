@@ -34,9 +34,9 @@ public class ExFragment extends ListFragment {
     boolean addPressed = false;
     boolean workoutExList = false;
 
-    public void setFlagForEditExList(boolean f) {
-        editExWorkout = f;
-    }
+//    public void setFlagForEditExList(boolean f) {
+//        editExWorkout = f;
+//    }
 
     public interface Listener {
         void onFinish(List<Exercise> exercises);
@@ -96,7 +96,7 @@ public class ExFragment extends ListFragment {
                 });
                 break;
             case "add":
-                addPressed = false;
+                addPressed = true;
                 ParseModel.getInstance().getAllExercises(new ParseModel.GetExerciseListener() {
                     @Override
                     public void onResult(List<Exercise> e) {
@@ -180,6 +180,8 @@ public class ExFragment extends ListFragment {
 
         if (addPressed) {
             finishBtn.setVisibility(View.VISIBLE);
+            cancelBtn.setVisibility(View.VISIBLE);
+
         }
 
         return view;
