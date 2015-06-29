@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
     CustomAdapter adapter;
     ExFragment exFragment;
     LinearLayout linearLayout;
-//    boolean addremoveWorkoutFlag = false;
+    //    boolean addremoveWorkoutFlag = false;
 //    MenuItem addWorkout;
     MenuItem removeWorkout;
 
@@ -51,7 +51,6 @@ public class MainActivity extends ActionBarActivity {
         adapter = new CustomAdapter();
         workoutList.setAdapter(adapter);
         progressBar.setVisibility(View.VISIBLE);
-
 
         ParseModel.getInstance().getUserWorkouts(new ParseModel.GetWorkoutsListener() {
             @Override
@@ -122,6 +121,7 @@ public class MainActivity extends ActionBarActivity {
                         Intent intent = new Intent(getApplication(), EditWorkoutActivity.class);
                         intent.putExtra("workout", workoutData.get(i).getWorkoutName());
                         startActivity(intent);
+                        finish();
                     }
 
                     @Override
@@ -181,7 +181,7 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.logout:
                 ParseUser.logOutInBackground();
                 Intent loginAvtyvity = new Intent(this, LoginActivity.class);

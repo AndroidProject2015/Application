@@ -512,17 +512,20 @@ public class ParseModel {
                     for (ParseObject p : list) {
 
                         List<ParseObject> exercisesList = p.getList("exercises");
+                        List<ParseObject> toRemove = new LinkedList<ParseObject>();
                         if (exercisesList != null) {
                             for (ParseObject parseExercise : exercisesList) {
                                 for (Exercise exercise : exercises) {
                                     if (exercise.getExId().equals(parseExercise.getObjectId())) {
-                                        exercisesList.remove(parseExercise);
+                                        toRemove.add(parseExercise);
+
                                     }
                                 }
                             }
-                            p.put("exercises", exercisesList);
-                            p.saveInBackground();
+                            exercisesList.removeAll(toRemove);
                         }
+                        p.put("exercises", exercisesList);
+                        p.saveInBackground();
                     }
                 }
             }
@@ -546,16 +549,7 @@ public class ParseModel {
                 allExerciseList.add(p);
             }
         }
-//        exQuery.findInBackground(new FindCallback<ParseObject>() {
-//            @Override
-//            public void done(List<ParseObject> exListFromParse, ParseException e) {
-//                if (e == null) {
-//                    for (ParseObject ex: allExerciseList){
-//                        allExerciseList.add(ex);
-//                    }
-//                }
-//            }
-//        });
+
 
         final ParseQuery query = ParseQuery.getQuery("Workout");
         query.whereEqualTo("objectId", workout.getId());
